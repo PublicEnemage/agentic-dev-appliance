@@ -1,0 +1,29 @@
+name: appliance-checks
+
+# Runs on every pull request and push, on every branch, so no lane is unprotected.
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r tools/checks/requirements.txt
+      - name: Check tests refuse what they should (seen to fail)
+        run: python -m pytest -q tests
+      - name: Appliance checks
+        run: python tools/checks/run_all.py
+      - name: Lint every executable script
+        run: |
+          status=0
+          while IFS= read -r f; do bash -n "$f" || status=1; done < <(git ls-files '*.sh' '.githooks/*')
+          exit $status

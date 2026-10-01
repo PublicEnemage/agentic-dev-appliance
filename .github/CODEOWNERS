@@ -1,0 +1,16 @@
+# Code owners route reviews to the seat that owns each path.
+# Until check E1 (v0.2) gives each agent seat its own GitHub identity, every path
+# resolves to the one human account. See the single-principal disclosure in CLAUDE.md.
+#
+# Bootstrap replaces the handle below. In v0.2, per-seat identities replace these lines:
+#   /docs/case/        @<product-seat-identity>
+#   /docs/design/      @<architect-seat-identity>
+#   /docs/registry.md  @<steward-seat-identity>
+
+*                     @PublicEnemage
+/CLAUDE.md            @PublicEnemage
+/appliance.yml        @PublicEnemage
+/docs/roles.yml       @PublicEnemage
+/docs/dor/            @PublicEnemage
+/tools/checks/        @PublicEnemage
+/.github/             @PublicEnemage

@@ -1,0 +1,75 @@
+# Seats, their charters, and who holds them.
+# This file is the source for the seat checks (tools/checks/check_seats.py).
+# Changes need the Engineering Lead's approval (see CODEOWNERS).
+#
+# qualified_layers: architecture layers the seat can author or challenge (floor row D6).
+# qualified_domains: domain areas the seat can challenge (floor row C8).
+# Narrow every list to what the holder can actually judge. A layer or domain that
+# no seat lists makes the check fail. That failure is the signal to open a crew review.
+
+seats:
+  Intent Owner:
+    kind: human
+    concern: Is this still worth doing?
+  Engineering Lead:
+    kind: human
+    concern: Is this sound and governed?
+  Product:
+    kind: agent
+    concern: Who uses this, and for what?
+    qualified_layers: []
+  Delivery:
+    kind: agent
+    concern: Is the work cut, ordered and flowing well?
+    qualified_layers: []
+  Architect:
+    kind: agent
+    concern: How is the system shaped, and does it meet its NFRs?
+    qualified_layers: [data, services-apis, integration, frontend, deployment-runtime]
+  Designer:
+    kind: agent
+    concern: How does it look and behave for users?
+    qualified_layers: [frontend]
+  Verifier:
+    kind: agent
+    concern: Does it do what the artifacts say?
+    qualified_layers: [deployment-runtime, operations]
+  Builder:
+    kind: agent
+    concern: Code, pipeline code and implementation design
+    qualified_layers: [data, services-apis, frontend, integration]
+  Operator:
+    kind: agent
+    concern: Security, privacy, deployment and run
+    qualified_layers: [deployment-runtime, operations, integration]
+  Steward:
+    kind: agent
+    concern: Was the process followed? Keeps the registry and audits the gates.
+    holds_no_artifact_seat: true
+
+# domain-core is listed by no seat on purpose. Each project names the seat that holds
+# its domain expertise here, or the D6 check fails and a crew review opens.
+qualified_domains: {}
+# Example once a domain seat exists:
+# qualified_domains:
+#   airspace-rules: [Domain Advisor]
+
+# Pairs that may never sit on one holder. These seats challenge each other's work,
+# so one agent holding both would be marking its own work.
+incompatible_pairs:
+  - [Builder, Verifier]
+  - [Builder, Product]
+  - [Builder, Architect]
+  - [Builder, Designer]
+  - [Verifier, Product]
+  - [Verifier, Architect]
+  - [Verifier, Operator]
+
+# One valid assignment for the minimum crew. Each holder works in its own sessions.
+holders:
+  Human 1: [Intent Owner, Engineering Lead]
+  Agent A: [Product, Delivery, Operator]
+  Agent B: [Architect, Designer]
+  Agent C: [Builder]
+  Agent D: [Verifier]
+  Agent E: [Steward]

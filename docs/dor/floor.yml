@@ -1,0 +1,90 @@
+# Definition of Ready: the floor.
+# A project may make these rows finer (child rows such as D2.1), never coarser.
+# A project may not delete, merge or weaken a floor row.
+# enforced_by: check IDs from docs/enforcement.yml.
+# judged_by: the seat that judges whether the content is good enough.
+# A row whose checks are all planned is advisory until they ship (design rule 4).
+
+version: 0.1.0
+
+gates: [case, design, plan, increment, release]
+
+rows:
+  - {id: C1, gate: case, enforced_by: [DOR, E10], judged_by: Intent Owner,
+     rule: "Intent statement names the problem, the users and the Intent Owner"}
+  - {id: C2, gate: case, enforced_by: [DOR, E10], judged_by: Intent Owner,
+     rule: "Business case states worthwhile conditions and kill boundaries as measurable thresholds: market, business and schedule"}
+  - {id: C3, gate: case, enforced_by: [DOR, E10], judged_by: Intent Owner,
+     rule: "Every business and system user is listed, and every use case names its user"}
+  - {id: C4, gate: case, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "NFRs give a target or signed not-applicable for: deployment targets, availability, resilience and recovery, performance at low, average, high and stress load, data retention, security, privacy, cost to run"}
+  - {id: C5, gate: case, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "Risk, security and privacy assessment covers data classification and the main threats"}
+  - {id: C6, gate: case, enforced_by: [DOR], judged_by: Intent Owner,
+     rule: "Rigor grade chosen and approved by the Intent Owner"}
+  - {id: C7, gate: case, enforced_by: [DOR, E10], judged_by: Verifier,
+     rule: "Every use case lists its main path, alternate paths and failure paths, each with an expected outcome"}
+  - {id: C8, gate: case, enforced_by: [DOR, SEATS], judged_by: Intent Owner,
+     rule: "Domain knowledge the use cases depend on is named. Each area has a seat qualified to challenge it, with a counter-perspective where judgment is contested"}
+  - {id: C9, gate: case, enforced_by: [DOR], judged_by: Intent Owner,
+     rule: "The business case cites evidence from real users or the market, such as interviews, usage data or behaviour, not agent opinion alone"}
+
+  - {id: D1, gate: design, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "Conceptual design maps every use case to a system capability"}
+  - {id: D2, gate: design, enforced_by: [DOR, SEATS], judged_by: Engineering Lead,
+     rule: "Target architecture has one section per layer: data, domain or computation core, services and APIs, frontend and presentation, integration, deployment and runtime, operations"}
+  - {id: D3, gate: design, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "Every cross-cutting choice has an ADR with an owning seat: framework, state, storage, messaging, identity, styling"}
+  - {id: D4, gate: design, enforced_by: [DOR], judged_by: Intent Owner,
+     rule: "UX design, including its experience intent, and design system exist, or are signed not-applicable"}
+  - {id: D5, gate: design, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "Test strategy names a test type for each NFR and an acceptance approach for each use case"}
+  - {id: D6, gate: design, enforced_by: [SEATS], judged_by: Engineering Lead,
+     rule: "Every architecture layer section has an author seat and a different challenger seat, each qualified for that layer as listed in the seat's charter"}
+  - {id: D7, gate: design, enforced_by: [DOR], judged_by: Verifier,
+     rule: "Each layer has a failure-mode list: missing, late, duplicate or malformed input, dependency down, partial success. Each mode has a handling rule and a signal that makes the failure loud"}
+  - {id: D8, gate: design, enforced_by: [DOR], judged_by: Verifier,
+     rule: "Logic with more than three interacting conditions is specified as a decision table or state diagram, with no empty cells"}
+  - {id: D9, gate: design, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "Each test level has a purpose, tool, runner and owning seat, decided by ADR. Contract tests are required wherever two components exchange data"}
+  - {id: D10, gate: design, enforced_by: [DOR], judged_by: Engineering Lead,
+     rule: "A test data standard names its owner, how fixtures are generated from the schema, the data classification rule, and how seeding is checked"}
+
+  - {id: P1, gate: plan, enforced_by: [DOR, E10], judged_by: Intent Owner,
+     rule: "Each increment from G0 to MVP names the use cases it will demonstrate"}
+  - {id: P2, gate: plan, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "Architecture, test and implementation backlogs trace to increments"}
+  - {id: P3, gate: plan, enforced_by: [DOR, E5, E6], judged_by: Engineering Lead,
+     rule: "Branching and CI/CD approach is written, and every gate is wired and smoke-tested"}
+  - {id: P4, gate: plan, enforced_by: [DOR], judged_by: Engineering Lead,
+     rule: "Operational readiness covers observability, SLOs and rollback"}
+  - {id: P5, gate: plan, enforced_by: [DOR], judged_by: Engineering Lead,
+     rule: "Delivery system is written and owned: hierarchy, story template, prioritization rule, cadence, track cap and metrics"}
+  - {id: P6, gate: plan, enforced_by: [DOR], judged_by: Engineering Lead,
+     rule: "Performance baseline is captured on a stable runner before the first increment starts"}
+  - {id: P7, gate: plan, enforced_by: [E7, E9], judged_by: Engineering Lead,
+     rule: "A session-exit check refuses to end a session with uncommitted changes or an unwritten state file. Shared-state files change only on their own lane"}
+  - {id: P8, gate: plan, enforced_by: [DOR, E13], judged_by: Operator,
+     rule: "Every deployment exposes machine-readable health and version endpoints, and a seeded smoke test covers one main path per use case in scope. The version identifies the build, so a check can confirm the running build is the one shipped"}
+
+  - {id: I1, gate: increment, enforced_by: [DOR, E10], judged_by: Verifier,
+     rule: "Increment intent is signed, with acceptance criteria testable without reading code"}
+  - {id: I2, gate: increment, enforced_by: [E2], judged_by: Verifier,
+     rule: "Tests are committed and seen red in CI, per test, before implementation"}
+  - {id: I3, gate: increment, enforced_by: [DOR, E10], judged_by: Architect,
+     rule: "Every dependency, top-level folder or cross-cutting pattern the increment introduces has an ADR"}
+  - {id: I4, gate: increment, enforced_by: [DOR], judged_by: Verifier,
+     rule: "At least one acceptance criterion per use case in scope exercises a failure path"}
+  - {id: I5, gate: increment, enforced_by: [DOR], judged_by: Verifier,
+     rule: "A fresh-session reader explains the code's behaviour, failures included, without seeing the intent; the explanation matches the intent"}
+  - {id: I6, gate: increment, enforced_by: [E3, E8], judged_by: Verifier,
+     rule: "No new per-test skip without an expiry entry, no file-level or blanket skip, no drop in collected test count, and fixtures still validate against the schema"}
+  - {id: I7, gate: increment, enforced_by: [DOR], judged_by: Delivery,
+     rule: "Every task carries an input manifest: the artifacts a fresh session reads to do the task. No task depends on prior conversation"}
+
+  - {id: R1, gate: release, enforced_by: [DOR, E10], judged_by: Intent Owner,
+     rule: "Every increment in scope has an approved validation verdict, with no open rejection"}
+  - {id: R2, gate: release, enforced_by: [DOR, E13], judged_by: Engineering Lead,
+     rule: "Operational readiness is proven in the target environment by the automated post-deploy check: health OK, reported version matches the build shipped, seeded smoke tests pass. Monitoring is live, SLOs measured, rollback rehearsed. The check's output is the evidence; nobody verifies by eye"}
+  - {id: R3, gate: release, enforced_by: [DOR], judged_by: Intent Owner,
+     rule: "Release notes and user documentation are written and approved by the Intent Owner"}

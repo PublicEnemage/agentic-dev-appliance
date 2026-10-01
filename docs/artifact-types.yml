@@ -1,0 +1,35 @@
+# Artifact types: where each lives, how it is named, and who must approve it.
+# File names follow {PREFIX}-{NNN}-{slug}.md, for example CASE-001-first-market.md.
+# A review file sits beside each artifact: {PREFIX}-{NNN}-{slug}.review.md.
+# root: true means the type may have no parents.
+# human_approver: true means the approver must be a human seat.
+
+statuses: [draft, in-review, approved, superseded]
+
+required_fields: [id, type, title, status, author_seat, challenger_seat, approver, parents]
+
+types:
+  intent:             {dir: docs/case,      prefix: INTENT, root: true,  human_approver: true}
+  business-case:      {dir: docs/case,      prefix: CASE,                human_approver: true}
+  users-use-cases:    {dir: docs/case,      prefix: UC,                  human_approver: true}
+  nfr:                {dir: docs/case,      prefix: NFR,                 human_approver: true}
+  risk-assessment:    {dir: docs/case,      prefix: RISK,                human_approver: true}
+  conceptual-design:  {dir: docs/design,    prefix: CD,                  human_approver: true}
+  architecture:       {dir: docs/design,    prefix: ARCH,                human_approver: true}
+  ux-design:          {dir: docs/design,    prefix: UX,                  human_approver: true}
+  test-strategy:      {dir: docs/design,    prefix: TS,                  human_approver: true}
+  adr:                {dir: docs/adr,       prefix: ADR,                 human_approver: true}
+  increment-plan:     {dir: docs/plan,      prefix: PLAN,                human_approver: true}
+  delivery-system:    {dir: docs/plan,      prefix: DS,                  human_approver: true}
+  cicd:               {dir: docs/plan,      prefix: CICD,                human_approver: true}
+  ops-readiness:      {dir: docs/plan,      prefix: OPS,                 human_approver: true}
+  increment-intent:   {dir: docs/intents,   prefix: INC,                 human_approver: true}
+  story:              {dir: docs/stories,   prefix: ST,                  human_approver: false}
+  validation-verdict: {dir: docs/verdicts,  prefix: VV,                  human_approver: true}
+  release-decision:   {dir: docs/release,   prefix: REL,                 human_approver: true}
+  benefits-check:     {dir: docs/release,   prefix: BEN,                 human_approver: true}
+  role-proposal:      {dir: docs/crew,      prefix: RP,     root: true,  human_approver: true}
+  standard:           {dir: docs/standards, prefix: STD,    root: true,  human_approver: true}
+
+# Architecture layers required by floor row D2. Each needs a qualified author and challenger (D6).
+layers: [data, domain-core, services-apis, frontend, integration, deployment-runtime, operations]

@@ -1,0 +1,53 @@
+# Definition of Ready checklist for this project.
+# Every floor row appears here. Add finer child rows (for example D2.1) with their own rule.
+# status: open | met | not-applicable
+#   met            -> evidence: [artifact ids, repository paths or URLs]
+#   not-applicable -> reason and approver
+# Increment rows (I1 to I7) are answered in each increment intent's front matter.
+# Check: python tools/checks/check_dor.py [--gate case|design|plan|release]
+
+floor_version: 0.1.0
+
+rows:
+  # case
+  C1: {status: open}
+  C2: {status: open}
+  C3: {status: open}
+  C4: {status: open}
+  C5: {status: open}
+  C6: {status: open}
+  C7: {status: open}
+  C8: {status: open}
+  C9: {status: open}
+  # design
+  D1: {status: open}
+  D2: {status: open}
+  D3: {status: open}
+  D4: {status: open}
+  D5: {status: open}
+  D6: {status: open}
+  D7: {status: open}
+  D8: {status: open}
+  D9: {status: open}
+  D10: {status: open}
+  # plan
+  P1: {status: open}
+  P2: {status: open}
+  P3: {status: open}
+  P4: {status: open}
+  P5: {status: open}
+  P6: {status: open}
+  P7: {status: open}
+  P8: {status: open}
+  # increment
+  I1: {status: per-increment}
+  I2: {status: per-increment}
+  I3: {status: per-increment}
+  I4: {status: per-increment}
+  I5: {status: per-increment}
+  I6: {status: per-increment}
+  I7: {status: per-increment}
+  # release
+  R1: {status: open}
+  R2: {status: open}
+  R3: {status: open}
