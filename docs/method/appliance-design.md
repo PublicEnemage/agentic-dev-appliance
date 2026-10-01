@@ -509,13 +509,11 @@ Agent-to-agent handoff is tested continuously at no extra cost. Every fresh sess
 | --- | --- | --- | --- |
 | Fresh agent session | Fully cold | Artifacts are explicit enough for an agent | None; runs every session |
 | Engineering Lead takes a seat he did not author, such as Verifier on an agent-built module | Warm: knows the method, not the module | Artifacts are sized and legible for a human reader | A few hours |
-| Intern takes a doing seat with no briefing | Fully cold | The full claim, human side | Intern time, and only if the ISC build proceeds |
+| A new human contributor takes a doing seat with no briefing | Fully cold | The full claim, human side | Contributor time, on a second instance |
 
 The Engineering Lead drill carries a disclosure, in the same spirit as the single-principal rule. The drill is not independent, because the author of the method is running it. The result is still useful evidence on artifact size and legibility.
 
 The primary measure is whether the newcomer's output passes verify and challenge on first submission, because a cold reader does not ask about what it cannot see is missing. Time to first useful output comes second. Questions asked are logged against the artifact that should have answered them, as a supporting signal. Predictions for these measures are written before the drill, so the gap is measured rather than described.
-
-The drill does not change the ISC go/no-go. The intern option exists only if the bid clears its own economics.
 
 ## Backtest against WorldSIM
 
@@ -573,4 +571,4 @@ The smoke cycle is the step most likely to be skipped. It is also the only proof
 - Agent-specific controls are not yet in the floor: least-privilege tool permissions per seat, prompt injection through repository content, and a policy for when the underlying model version changes.
 - An outside taxonomy check found areas not yet covered: secrets management, incident response after launch, data migration and dependency licensing.
 - Floor governance across instances is open: who approves a floor change, and how a project upgrades its pinned version.
-- Transfer evidence for instance two needs predictions written before the ISC build starts, for both the bootstrap dry run and the seat-swap drill, if the bid proceeds.
+- Transfer evidence for a second instance needs predictions written before that build starts, for both the bootstrap dry run and the seat-swap drill.
