@@ -6,9 +6,6 @@
 # qualified_domains: domain areas the seat can challenge (floor row C8).
 # Narrow every list to what the holder can actually judge. A layer or domain that
 # no seat lists makes the check fail. That failure is the signal to open a crew review.
-# Never add a qualification to make a check pass. Leave it empty and let the crew review
-# open. A generic agent session is qualified for a layer only when its charter, its
-# instructions or a named reference give it the knowledge to judge that layer.
 
 seats:
   Intent Owner:
@@ -82,8 +79,6 @@ incompatible_pairs:
   - [Data Architect, Verifier]
 
 # One valid assignment for the minimum crew. Each holder works in its own sessions.
-# Rename "Human 1" to the person's name or GitHub handle at bootstrap, so this file and
-# CLAUDE.md name the same holder.
 holders:
   Human 1: [Intent Owner, Engineering Lead]
   Agent A: [Product, Delivery, Operator]

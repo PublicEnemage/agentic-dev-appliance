@@ -4,12 +4,7 @@
 appliance_version: 0.1.0
 floor_version: 0.1.0          # pinned Definition of Ready floor (docs/dor/floor.yml)
 
-grade: standard               # light | standard | assured
-# standard: the default for anything with real users or real users' data.
-# light:    spikes and throwaway prototypes with no real users' data.
-# assured:  regulated, safety-related, or handling money.
-# Bootstrap proposes a grade here. The business case confirms it (floor row C6), and the
-# Intent Owner approves it there. If the two differ, the business case wins.
+grade: light                  # light | standard | assured (approved by the Intent Owner, floor row C6)
 
 autonomy:
   merge_to_main: human        # human | auto-on-green

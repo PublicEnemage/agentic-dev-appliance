@@ -96,3 +96,9 @@ def test_refuses_review_by_a_different_challenger(repo):
 def test_refuses_unknown_status(repo):
     repo.artifact("intent", 1, status="done")
     assert "status 'done'" in messages(check_artifacts.check(repo.root))
+
+
+def test_refuses_artifact_saved_outside_the_artifact_folders(repo):
+    # Dry run 1: an intent saved under docs/misc/ was ignored and passed.
+    repo.artifact("intent", 1, folder="docs/misc")
+    assert "sits outside the artifact folders; it belongs in docs/case/" in messages(check_artifacts.check(repo.root))

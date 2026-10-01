@@ -32,9 +32,10 @@ Full detail: [docs/enforcement.yml](docs/enforcement.yml). Plan: [docs/roadmap.m
 
 ## Start a project
 
-See [BOOTSTRAP.md](BOOTSTRAP.md). In short: create a repository from this template, fill
-the slots in `CLAUDE.md`, narrow the seat charters in `docs/roles.yml`, have a fresh session
-challenge the setup, approve it, then run the smoke cycle. Cycle 1 builds no product code.
+See [BOOTSTRAP.md](BOOTSTRAP.md). In short: create a repository from this template and
+protect its lanes, run a bootstrap session in the Architect seat, have a fresh Verifier
+session challenge it, answer the findings, approve, then run the smoke cycle. Cycle 1 builds
+no product code.
 
 ## Layout
 
@@ -49,7 +50,7 @@ docs/enforcement.yml      every check and its status
 docs/templates/           templates for every artifact type
 docs/standards/data/      data standards (draft defaults to adapt) and the Data Architect trigger
 docs/registry.md          near-misses and external issues
-docs/method/              design rationale, challenge record, backtest
+docs/method/              design rationale, challenge record, backtest, dry runs, template registry
 tools/checks/             the checks
 tests/                    tests showing each check refusing what it should
 ```
@@ -61,4 +62,5 @@ branches and open pull requests; the owner reviews and merges. Agent work is pus
 owner's GitHub authorization until check E1 ships. No independent review is available at this
 governance stage. The challenge round recorded in
 [docs/method/challenge-round-1.md](docs/method/challenge-round-1.md) was run by a fresh
-session with no access to the author's reasoning.
+session with no access to the author's reasoning. The first cold-start test of the
+template is in [docs/method/dryrun-1.md](docs/method/dryrun-1.md).

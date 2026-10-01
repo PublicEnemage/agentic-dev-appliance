@@ -74,3 +74,9 @@ def test_refuses_unbalanced_code_fence(repo):
 def test_refuses_unknown_registry_type(repo):
     add_entries(repo, ENTRY.format(n=1, type="incident", check="E6"))
     assert "Type 'incident'" in messages(check_registry.check(repo.root))
+
+
+def test_template_development_registry_is_well_formed():
+    from conftest import REPO
+    report = check_registry.check(REPO, "docs/method/registry.md")
+    assert report.ok, messages(report)

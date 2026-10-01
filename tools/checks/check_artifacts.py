@@ -2,7 +2,8 @@
 
 Refuses when:
 - an artifact has missing or invalid front matter, or a required field is missing
-- the type is unknown, or the file sits outside its type's folder
+- the type is unknown, or the file sits outside its type's folder, including files with
+  artifact front matter saved outside every artifact folder
 - the file name does not match {PREFIX}-{NNN}-{slug}.md, or the id does not match the file name
 - two artifacts share an id
 - a parent, or an ID referenced in the body, does not exist (live-ID check)
@@ -18,9 +19,29 @@ import re
 import sys
 from pathlib import Path
 
-from lib import Report, as_list, load_artifacts, load_config, read_front_matter, root_from_argv, to_datetime
+from lib import Report, artifact_dirs, as_list, load_artifacts, load_config, read_front_matter, root_from_argv, to_datetime
 
 NAME = re.compile(r"^(?P<id>(?P<prefix>[A-Z]+)-\d{3})-[a-z0-9]+(?:-[a-z0-9]+)*\.md$")
+
+
+SKIP_PARTS = {".git", "node_modules", ".venv", "venv", "__pycache__"}
+
+
+def stray_artifacts(root: Path, types: dict):
+    """Markdown files with artifact front matter (a known type and an id) that sit
+    outside every artifact folder. Templates and test fixtures are excluded."""
+    dirs = artifact_dirs(types)
+    tdefs = types["types"]
+    for p in root.rglob("*.md"):
+        rel = p.relative_to(root)
+        if SKIP_PARTS & set(rel.parts) or rel.parts[:2] in (("docs", "templates"), ("tests", "fixtures")):
+            continue
+        rel_s = rel.as_posix()
+        if any(rel_s.startswith(d + "/") for d in dirs):
+            continue
+        meta, _ = read_front_matter(p)
+        if meta and meta.get("type") in tdefs and meta.get("id"):
+            yield rel_s, meta["type"]
 
 
 def check(root: Path) -> Report:
@@ -34,6 +55,8 @@ def check(root: Path) -> Report:
     id_pattern = re.compile(r"\b(?:%s)-\d{3}\b" % "|".join(sorted(prefixes)))
 
     arts = load_artifacts(root, types, report)
+    for rel, t in stray_artifacts(root, types):
+        report.add("E10", rel, f"looks like a '{t}' artifact but sits outside the artifact folders; it belongs in {tdefs[t]['dir']}/")
     by_id: dict[str, object] = {}
 
     for a in arts:

@@ -3,41 +3,94 @@
 How a new project starts from this template. Cycle 1 builds no product code. Cycle 1 is
 setup, the smoke cycle and the discovery track.
 
+Steps 1 to 3 and 6 are for the human. Steps 4, 5 and 8 are agent sessions, each in a
+fresh session. Step 9 is shared.
+
 ## Steps
 
-1. **Create the repository** from this template. Pin `floor_version` in `appliance.yml`.
-2. **Create identities and rules.** Until check E1 ships (v0.2), agents commit under the
-   human's GitHub identity. Keep `single_principal: true` and the disclosure in `CLAUDE.md`.
-   Protect `main`, and every other lane you create, with required checks.
-3. **Name the human seats.** Fill the Intent Owner and Engineering Lead in `CLAUDE.md`.
-4. **Bootstrap session.** One agent session fills the slots:
-   - `CLAUDE.md`: mission and principles
-   - `docs/roles.yml`: narrow each seat's `qualified_layers` to what its holder can judge,
-     and name the seat for `domain-core` and any `qualified_domains`
-   - `.github/CODEOWNERS`: the right handles
-   - `appliance.yml`: grade, merge autonomy, and the contracts and migrations folders
-   - `docs/standards/data/`: adapt each draft data standard, or mark it not-applicable in
-     the checklist with a reason (floor row D11). Decide whether a Data Architect seat is
-     needed now, using the triggers in that folder's README
-5. **Challenge the bootstrap.** A fresh session, a different seat, reviews the bootstrap
-   output against `docs/dor/floor.yml` and `docs/roles.yml`. It is asked to find what is
-   wrong or missing. The bootstrap author never approves its own setup.
-6. **Approve.** The Engineering Lead reviews the challenge and merges.
-7. **Install the hooks:** `git config core.hooksPath .githooks`
-8. **Smoke cycle.** On a branch, break each check on purpose and confirm it refuses:
-   - an artifact in the wrong folder (E10)
-   - an artifact whose author is also its approver (SEATS)
+1. **Create the repository** from this template ("Use this template" on GitHub). Make it
+   public, or use a plan that enforces rulesets on private repositories.
+2. **Protect every lane.** Rulesets do not copy from the template. Add a ruleset on the
+   default branch, and on every other long-lived branch pattern, that requires the
+   `checks` job and a pull request, blocks force pushes and deletions, and has an empty
+   bypass list. Until check E1 ships, agents push under the human's GitHub authorization:
+   keep `single_principal: true` and the disclosure in `CLAUDE.md`.
+3. **Name the human seats.** Tell the bootstrap session who holds the Intent Owner and
+   Engineering Lead seats. The session writes the names; it never invents them.
+
+4. **Bootstrap session.** The session holds the **Architect** seat.
+
+   **Input manifest:** `CLAUDE.md`, `STATE.md`, this file, `appliance.yml`,
+   `docs/roles.yml`, `docs/standards/data/`, `.github/CODEOWNERS`, and the product
+   description the human gives. Read the floor (`docs/dor/floor.yml`) for context only;
+   no floor row is expected to be met at bootstrap.
+
+   The session:
+   - fills the mission and principles in `CLAUDE.md`, marked as drafts for the Intent
+     Owner to approve, and replaces the "Slots ... are filled at bootstrap" sentence
+   - renames the human holder in `docs/roles.yml` to the person's name or handle
+   - narrows each seat's `qualified_layers` to what its holder can judge. **Never adds a
+     qualification to make a check pass.** If no seat can judge `domain-core` or a domain
+     area, it leaves the list empty, lets the check fail, and records a crew review as the
+     first open decision in `STATE.md`
+   - proposes a grade in `appliance.yml`. Standard is the default for anything with real
+     users or their data. The business case confirms the grade later (floor row C6)
+   - sets merge autonomy, and the contracts and migrations folders if the stack is known.
+     If not, leaves the defaults and lists the choice as open
+   - updates `.github/CODEOWNERS` with the right handles
+   - adapts each draft data standard in `docs/standards/data/`, or marks it
+     not-applicable in `docs/dor/checklist.yml` with a reason and `approver: Engineering Lead`.
+     The Engineering Lead's merge in step 6 is the signature. Adapted standards stay
+     `draft`; they are challenged and approved through the chain before the design gate
+     (floor row D11). On each standard it edits, the session sets `author_seat: Architect`
+     and `challenger_seat: Verifier`
+   - records whether a Data Architect seat is needed now in `docs/standards/data/README.md`,
+     against the triggers listed there
+   - writes every question it would have asked a human into `STATE.md` under "Open
+     decisions", with the assumption it made
+   - runs the checks, commits on a `bootstrap` branch, and updates `STATE.md`
+
+5. **Challenge the bootstrap.** A fresh session holding the **Verifier** seat reviews the
+   bootstrap branch: everything changed since the template commit. It is asked to find
+   what is wrong, missing or inconsistent, not to confirm.
+
+   **Input manifest:** the same as step 4, plus `git diff` against the template commit,
+   plus `docs/templates/review.md`.
+
+   The challenger writes its findings to `docs/bootstrap.review.md`, using the review
+   template and its severity scale, and commits it to the `bootstrap` branch. It reviews
+   against the constitution, `docs/roles.yml`, `appliance.yml`, the data standards and
+   this file. It does not judge the draft standards' clauses in detail; their own
+   challenge comes before the design gate.
+
+   The bootstrap author then answers each finding in the Answer column: fixed, or declined
+   with a reason. High findings must be fixed. When every finding is answered and
+   `open_findings` is 0, the branch is ready for step 6.
+6. **Approve.** The Engineering Lead reads the review, opens a pull request from
+   `bootstrap`, and merges it. The merge approves the mission, principles, roles, grade
+   proposal and any not-applicable rows.
+7. **Install the hooks:** `git config core.hooksPath .githooks`. The setting applies to
+   every worktree of the clone, which is intended. The hook refuses to run while the
+   working tree has uncommitted or untracked changes.
+8. **Smoke cycle.** A fresh session, on a throwaway branch cut from the merged `main`,
+   breaks each check on purpose and confirms it refuses, one item at a time:
+   - an artifact in the wrong folder, and one outside every artifact folder (E10)
+   - an artifact whose author seat is also its approver seat (SEATS)
    - a deleted floor row in `docs/dor/checklist.yml` (DOR)
    - a test with an early return (E3)
    - a registry entry with a gap in its IDs (E11)
    - a contract file with no consumers (E14)
-   - an edit to a merged migration (E15)
+   - an edit to a migration already committed on the base: commit a migration, then run
+     `python3 tools/checks/check_migrations.py --base <that commit>` after editing it (E15)
    - an architecture artifact in review with no data-model diagram (E16)
+   - the pre-push hook, run directly, with one breaking change committed
 
-   Record the date and results in `STATE.md`. Discard the branch.
+   The session writes the results to `docs/archive/smoke-<date>.md`, then discards the
+   breaking changes. The results file goes to `main` through a small pull request, and
+   `STATE.md` links to it. The throwaway branch is deleted.
 9. **Discovery track.** Write the intent and business case with the Intent Owner, then
-   users, use cases, NFRs and the risk assessment. Run
-   `python tools/checks/check_dor.py --gate case` until the case gate passes.
+   users, use cases, NFRs and the risk assessment. Start with the open decisions in
+   `STATE.md`. Run `python3 tools/checks/check_dor.py --gate case` until the case gate passes.
 
 Delivery starts once the case and design gates pass and there is baselined work to pull.
 
@@ -45,9 +98,11 @@ Delivery starts once the case and design gates pass and there is baselined work 
 
 ```
 pip install -r tools/checks/requirements.txt
-python tools/checks/run_all.py              # every implemented check
-python tools/checks/run_all.py --gate case  # also require the case gate rows
-python -m pytest -q tests                   # the checks' own tests
+python3 tools/checks/run_all.py              # every implemented check
+python3 tools/checks/run_all.py --gate case  # also require the case gate rows
+python3 -m pytest -q tests                   # the checks' own tests
 ```
 
-What each check enforces, and what is still advisory, is in `docs/enforcement.yml`.
+The checks' tests use fixed defaults in `tests/fixtures/defaults/`, so a project's own
+roles, settings and constitution never break them. What each check enforces, and what is
+still advisory, is in `docs/enforcement.yml`.

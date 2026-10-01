@@ -36,16 +36,16 @@ def strip_comments(text: str) -> str:
     return re.sub(r"<!--.*?-->", "", text, flags=re.S)
 
 
-def check(root: Path) -> Report:
+def check(root: Path, rel: str = REGISTRY) -> Report:
     report = Report()
-    path = root / REGISTRY
+    path = root / rel
     if not path.is_file():
-        report.add("E11", REGISTRY, "registry is missing")
+        report.add("E11", rel, "registry is missing")
         return report
     raw = path.read_text(encoding="utf-8")
     fences = [ln for ln in raw.splitlines() if ln.lstrip().startswith("```")]
     if len(fences) % 2:
-        report.add("E11", REGISTRY, "unbalanced code fence; entries after it render as code")
+        report.add("E11", rel, "unbalanced code fence; entries after it render as code")
 
     text = strip_comments(raw)
     entries: list[tuple[str, int, list[str]]] = []
@@ -54,7 +54,7 @@ def check(root: Path) -> Report:
         if ln.startswith("## "):
             m = HEADING.match(ln)
             if not m:
-                report.add("E11", REGISTRY, f"malformed entry heading: '{ln.strip()}'")
+                report.add("E11", rel, f"malformed entry heading: '{ln.strip()}'")
                 current = None
                 continue
             current = []
@@ -66,24 +66,24 @@ def check(root: Path) -> Report:
     seen: set[str] = set()
     for rid, n, lines in entries:
         if rid in seen:
-            report.add("E11", REGISTRY, f"{rid}: duplicate id")
+            report.add("E11", rel, f"{rid}: duplicate id")
         seen.add(rid)
         if n != expected:
-            report.add("E11", REGISTRY, f"{rid}: expected RG-{expected:03d}; ids are ascending without gaps")
+            report.add("E11", rel, f"{rid}: expected RG-{expected:03d}; ids are ascending without gaps")
         expected = n + 1
         body = "\n".join(lines)
         values = {}
         for f in FIELDS:
             m = re.search(rf"^\*\*{re.escape(f)}:\*\*\s*(.+)$", body, re.M)
             if not m or not m.group(1).strip():
-                report.add("E11", REGISTRY, f"{rid}: missing field '{f}'")
+                report.add("E11", rel, f"{rid}: missing field '{f}'")
             else:
                 values[f] = m.group(1).strip()
         t = values.get("Type")
         if t and t not in TYPES:
-            report.add("E11", REGISTRY, f"{rid}: Type '{t}' is not one of {sorted(TYPES)}")
+            report.add("E11", rel, f"{rid}: Type '{t}' is not one of {sorted(TYPES)}")
         if t == "near-miss" and values.get("Check", "").lower() in {"none", "n/a", "tbd", "be more careful"}:
-            report.add("E11", REGISTRY, f"{rid}: a near-miss countermeasure must ship as a check")
+            report.add("E11", rel, f"{rid}: a near-miss countermeasure must ship as a check")
     return report
 
 
