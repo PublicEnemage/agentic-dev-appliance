@@ -19,7 +19,10 @@ Shipped so far:
 - **Data discipline:** five draft data standards (schema change, contracts, quality,
   reference and seed data, governance), floor rows D11, D12 and I8, check E14 for data
   contracts, check E15 for append-only migrations, and an optional Data Architect seat
-  with written adoption triggers. The floor is now 40 rows.
+  with written adoption triggers.
+- **Required diagrams:** architecture, conceptual design and UX artifacts carry Mermaid
+  diagrams for context, components, data model, key interactions, deployment, user flows
+  and navigation. Floor row D13 and check E16. The floor is now 41 rows.
 
 Still to come:
 

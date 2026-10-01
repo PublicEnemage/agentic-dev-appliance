@@ -33,3 +33,37 @@ types:
 
 # Architecture layers required by floor row D2. Each needs a qualified author and challenger (D6).
 layers: [data, domain-core, services-apis, frontend, integration, deployment-runtime, operations]
+
+# Diagrams required in an artifact once it is in review or approved (floor row D13, check E16).
+# Each diagram is a Mermaid block tagged on the line before its fence:
+#     <!-- diagram: data-model -->
+#     ```mermaid
+#     erDiagram
+#       ORDER ||--o{ LINE_ITEM : contains
+#     ```
+# A tag may repeat, for example one key-interactions diagram per critical exchange.
+# A diagram that does not apply is declared in front matter:
+#     diagrams:
+#       user-flows: {not_applicable: "Headless service", approver: Intent Owner}
+# form: flowchart | er | sequence | state.  min: the fewest nodes, entities or participants.
+diagram_forms:
+  flowchart: [flowchart, graph]
+  er: [erDiagram]
+  sequence: [sequenceDiagram]
+  state: [stateDiagram, stateDiagram-v2]
+
+diagram_tags:
+  capability-map:   {form: flowchart, min: 3, shows: "Use cases mapped to system capabilities"}
+  context:          {form: flowchart, min: 3, shows: "The system, its users and external systems"}
+  components:       {form: flowchart, min: 3, shows: "Parts of the system and what calls what"}
+  data-model:       {form: er,        min: 2, shows: "Entities, attributes and relationships with cardinality"}
+  key-interactions: {form: sequence,  min: 2, shows: "Messages between parts for a critical exchange"}
+  deployment:       {form: flowchart, min: 2, shows: "Runtime nodes and where each component runs"}
+  user-flows:       {form: flowchart, min: 3, shows: "Main and failure paths through the interface"}
+  navigation:       {form: flowchart, min: 2, shows: "Screens and how they connect"}
+  states:           {form: state,     min: 2, shows: "States and transitions of stateful logic (pairs with D8)"}
+
+required_diagrams:
+  conceptual-design: [capability-map]
+  architecture: [context, components, data-model, key-interactions, deployment]
+  ux-design: [user-flows, navigation]

@@ -36,9 +36,34 @@ layers:
 
 # {{Title}}
 
-Floor rows D2, D6, D7, D8. Each layer has its own author and challenger in front matter
+Floor rows D2, D6, D7, D8, D13. Each layer has its own author and challenger in front matter
 `layers`, and both must be qualified for that layer in `docs/roles.yml`. Check D6 refuses
 a layer no qualified seat covers. That refusal opens a crew review.
+
+Diagrams are Mermaid code, tagged on the line above the fence. Replace each sample with
+the real thing. Where a diagram and the text disagree, the diagram governs structure.
+Check E16 refuses a missing, wrong-form or empty diagram once this file is in review.
+
+## Context
+
+<!-- diagram: context -->
+```mermaid
+flowchart LR
+  User[Primary user] -->|uses| System[This system]
+  System -->|calls| External[External system]
+  Admin[Operator] -->|runs| System
+```
+
+## Components
+
+<!-- diagram: components -->
+```mermaid
+flowchart LR
+  UI[Frontend] -->|HTTPS| API[Service API]
+  API -->|reads and writes| DB[(Primary store)]
+  API -->|publishes| Bus[[Event bus]]
+  Worker[Worker] -->|consumes| Bus
+```
 
 ## Data
 Standards: `docs/standards/data/` (STD-001 to STD-005). Floor rows D11, D12, I8.
@@ -50,6 +75,21 @@ Standards: `docs/standards/data/` (STD-001 to STD-005). Floor rows D11, D12, I8.
 - **Reference and seed data:** {{each dataset, its owner seat, its seed script}}
 - **Data Architect seat:** {{not needed, because ...}} or {{adopted, see RP-NNN}}.
   Triggers: `docs/standards/data/README.md`.
+
+Data model: every entity, its key attributes, and each relationship with cardinality.
+
+<!-- diagram: data-model -->
+```mermaid
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  ORDER ||--|{ LINE_ITEM : contains
+  PRODUCT ||--o{ LINE_ITEM : "appears in"
+  ORDER {
+    string id PK
+    string customer_id FK
+    datetime placed_at
+  }
+```
 
 ## Domain or computation core
 {{The domain logic or computation the product depends on.}}
@@ -67,8 +107,33 @@ Standards: `docs/standards/data/` (STD-001 to STD-005). Floor rows D11, D12, I8.
 | Exchange | Kind | Producer | Consumers | Contract file |
 | --- | --- | --- | --- | --- |
 
+One sequence diagram per critical exchange, failure response included.
+
+<!-- diagram: key-interactions -->
+```mermaid
+sequenceDiagram
+  participant UI as Frontend
+  participant API as Service API
+  participant DB as Primary store
+  UI->>API: Submit request
+  API->>DB: Write record
+  DB-->>API: Saved
+  API-->>UI: 201 Created
+  API-->>UI: 422 with the rule that failed
+```
+
 ## Deployment and runtime
 {{}}
+
+<!-- diagram: deployment -->
+```mermaid
+flowchart TB
+  subgraph Cloud[Hosting environment]
+    App[App container] --> Store[(Managed database)]
+  end
+  CI[CI pipeline] -->|deploys build, version tagged| App
+  Probe[Post-deploy check E13] -->|health and version| App
+```
 
 ## Operations
 {{}}

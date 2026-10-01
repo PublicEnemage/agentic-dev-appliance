@@ -8,7 +8,7 @@ Sep 30, 2026 · @Imran
 
 ## Summary
 
-WorldSIM grew about 30 agent roles, a 52 KB constitution, a 157 KB roster and 100 near-miss entries by July 2026. The appliance proposed here runs on 2 human seats and 5 agents, with 4 phase gates above 4 increment gates and a 40-row Definition of Ready floor. Everything else becomes an optional module or a project-level rule. A blind challenger backtested the draft against WorldSIM's 100 near-misses and found only 19 caught by a named check. Twelve enforcement checks now name the missing mechanisms.
+WorldSIM grew about 30 agent roles, a 52 KB constitution, a 157 KB roster and 100 near-miss entries by July 2026. The appliance proposed here runs on 2 human seats and 5 agents, with 4 phase gates above 4 increment gates and a 41-row Definition of Ready floor. Everything else becomes an optional module or a project-level rule. A blind challenger backtested the draft against WorldSIM's 100 near-misses and found only 19 caught by a named check. Twelve enforcement checks now name the missing mechanisms.
 
 The near-miss registry changes the emphasis of the charter. The lessons the charter headlines, such as generative consultation and panel-to-root-cause matching, account for about 6 of 100 entries. Roughly half of all entries fall into three mechanical classes: tests that pass without measuring anything, parallel agent sessions corrupting each other's work, and gates that existed only on paper. These three classes are universal to agentic development and can be closed by machinery rather than by instruction. The appliance should lead with them.
 
@@ -303,6 +303,7 @@ The Definition of Ready template is the operational checklist for every phase ga
 | D10 | Design | A test data standard names its owner, how fixtures are generated from the schema, the data classification rule, and how seeding is checked |
 | D11 | Design | The data standards are approved, or each is signed not-applicable: schema change policy, data contracts, data quality, reference and seed data, data governance |
 | D12 | Design | Every exchange named in the architecture's integration section has a contract file with a producer and at least one consumer |
+| D13 | Design | Conceptual design, architecture and UX artifacts carry their required diagrams as Mermaid code: capability map, context, components, data model with relationships, key interactions, deployment, user flows and navigation. Where a diagram and its text disagree, the diagram governs structure and the gap is a challenge finding |
 | P1 | Plan | Each increment from G0 to MVP names the use cases it will demonstrate |
 | P2 | Plan | Architecture, test and implementation backlogs trace to increments |
 | P3 | Plan | Branching and CI/CD approach is written, and every gate is wired and smoke-tested |
@@ -467,6 +468,23 @@ Five draft standards now ship in `docs/standards/data/`: schema change policy, d
 Two checks enforce what a machine can see. E14 refuses a contract with no consumer, a missing producer, or an incomplete schema. E15 refuses any edit, deletion or rename of a merged migration, and fails rather than skips when it cannot find the base to compare against.
 
 A Data Architect seat is chartered but not held by default. The seat check refuses any artifact that names it until a role proposal adopts it. Five written triggers say when to raise that proposal, so the question comes before the first schema mistake rather than after it.
+
+## Diagrams as the contract for structure
+
+In WorldSIM, architecture decisions written as prose were read several ways at implementation time (Engineering Lead's account). Prose hides master-detail, hierarchy and sum-of-parts relationships that a picture shows at once. An entity relationship can be read only one way.
+
+Conceptual design, architecture and UX artifacts now carry required diagrams, written as Mermaid code inside the artifact. Code rather than images, because GitHub renders it, agents read and write it, pull requests show exactly which entity or arrow moved, and a check can parse it.
+
+| Artifact | Required diagrams |
+| --- | --- |
+| Conceptual design | Capability map |
+| Architecture | Context, components, data model (erDiagram), key interactions (sequenceDiagram), deployment |
+| UX design | User flows, navigation |
+| Any artifact with stateful logic | States (stateDiagram), when used |
+
+Floor row D13 makes the diagrams part of the design gate, and says the diagram governs structure when it and the text disagree. Check E16 refuses an artifact in review or approved when a required diagram is missing, uses the wrong form, or has no parts and links worth reading. A diagram that does not apply is declared not-applicable with a reason and an approver. Templates ship with tagged starter diagrams, so an artifact starts from a picture rather than a blank.
+
+E16 sees presence and shape, not correctness. Whether the diagram matches the text and the code is the challenger's call. A later check can cross-reference data-model entities with the schema, and component links with contract files.
 
 ## Elastic crew: how the team grows and shrinks
 
