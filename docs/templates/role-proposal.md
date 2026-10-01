@@ -57,8 +57,9 @@ Say it in prose where the front matter is too short to carry it.
   consumer applies.
 - **Standards and templates:** which it follows, and which it authors. A new standard
   goes through the chain as its own artifact.
-- **Charter lines for `docs/roles.yml`:** concern, qualified layers or domains, owned
-  files, incompatible pairs.
+- **Roster entry:** on approval, copy the charter unchanged into the seat's `job` in
+  `docs/roles.yml`, with its concern, qualified layers or domains and incompatible pairs.
+  The check refuses a roster whose job differs from the approved charter.
 
 ## Independent verification
 

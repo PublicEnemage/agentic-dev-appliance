@@ -25,7 +25,7 @@ it. A rule without a running check is a suggestion, so the status of every check
 | E14 | Data contracts: producer, consumers, kind, version, compatibility, schema | Implemented |
 | E15 | Append-only migrations: no edit, delete or rename of a merged migration | Implemented |
 | E16 | Required diagrams as Mermaid code: present, right form, not empty | Implemented |
-| E17 | Role proposals: job description, independent verifier, peer review with demand | Implemented |
+| E17 | Every seat has a job description; role proposals add an independent verifier and a peer review with demand | Implemented |
 | E1, E4, E5, E7, E8, E12, E13 | Identities, contracts, rulesets, harness hooks, manifests, validation env, post-deploy verification | v0.2 |
 | E2, E6 | Red record per test, gate canary | v0.3 |
 

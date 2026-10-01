@@ -112,13 +112,15 @@ checks:
       the code is the challenger's call. A later check can cross-reference data-model
       entities with the schema and component links with contract files (E14).
   E17:
-    name: Role proposals carry a job description and an independent peer review
+    name: Every seat has a job description; role proposals add an independent peer review
     where: pre-push, CI
     status: implemented
     implemented: tools/checks/check_crew.py
     note: >
-      A role proposal in review or approved must state its trigger, inputs and senders,
-      value, outputs and consumers, standards, templates, and a verifier with evidence.
+      Every seat in docs/roles.yml, human or agent, core or optional, must state its
+      trigger, inputs and senders, value, outputs and consumers, standards, templates, and
+      a verifier on another holder with evidence. A role proposal in review or approved
+      states the same, and an approved charter must match the roster unchanged.
       Its peer review needs two or more independent peers, including every agent seat that
       sends it input or consumes its output, each with a recommendation, a demand
       statement and evidence. Checks completeness and independence. Whether the job

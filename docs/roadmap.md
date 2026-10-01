@@ -37,7 +37,9 @@ Shipped so far:
 - **Crew proposals (E17):** a role proposal states a trigger, inputs and senders, value,
   outputs and consumers, standards and templates, and an independent verifier with
   evidence. Peers recommend on demand, and the Engineering Lead approves with that
-  endorsement. Open: backfill the existing agent seats through the same review.
+  endorsement. Every seat in `docs/roles.yml`, human or agent, core or optional, carries
+  the same job description, and the check refuses a roster without them. The core
+  descriptions are drafts written from the artifact register. Open: peer review of them.
 
 - **Agency and exceptions (design):** design rule 10 (prescribe outcomes and gates, let the
   job description carry judgment) and a constitution line. The exception mechanism is

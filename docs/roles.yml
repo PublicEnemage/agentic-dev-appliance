@@ -6,6 +6,12 @@
 # qualified_domains: domain areas the seat can challenge (floor row C8).
 # Narrow every list to what the holder can actually judge. A layer or domain that
 # no seat lists makes the check fail. That failure is the signal to open a crew review.
+# job: every seat has a job description, human or agent, core or optional (check E17).
+# It states the trigger, the inputs and who sends them, the value, the outputs and who
+# consumes them with an acceptance test, the standards and templates it uses, and a
+# verifier on another holder with the evidence it inspects. A seat without one fails the
+# check. A new seat arrives through a role proposal, whose peer review tests the same
+# lines; the approved charter is copied here unchanged.
 # Never add a qualification to make a check pass. Leave it empty and let the crew review
 # open. A generic agent session is qualified for a layer only when its charter, its
 # instructions or a named reference give it the knowledge to judge that layer.
@@ -14,41 +20,203 @@ seats:
   Intent Owner:
     kind: human
     concern: Is this still worth doing?
+    job:
+      trigger: "A discovery or planning artifact reaches in-review; a gate needs the business to decide; a kill boundary may have been crossed"
+      inputs:
+        - {artifact: business-case, from: Product}
+        - {artifact: increment-plan, from: Product}
+        - {artifact: validation-verdict, from: Product}
+        - {artifact: release-decision, from: Operator}
+      value: "Decides whether the work is still worth doing against the business case's worthwhile conditions and kill boundaries, and signs only what serves that concern. An agent cannot hold this seat"
+      outputs:
+        - {artifact: "approved intent, business case, users and use cases, UX design and increment plan", for: Architect, acceptance: "Each approved artifact cites its parents, has approved_at set and no open finding (E10)"}
+        - {artifact: "continue or stop decision at each gate", for: Delivery, acceptance: "Recorded in an approved artifact or STATE.md, never only in conversation"}
+      standards: [docs/dor/floor.yml, docs/artifact-types.yml]
+      templates: [docs/templates/intent.md, docs/templates/validation-verdict.md, docs/templates/benefits-check.md]
+      verifier:
+        seat: Steward
+        evidence: "Approval order and approved_at on every artifact this seat signs (E10); case-gate rows it judges are met in docs/dor/checklist.yml (DOR)"
   Engineering Lead:
     kind: human
     concern: Is this sound and governed?
+    job:
+      trigger: "An engineering artifact reaches in-review with its challenge answered; a role proposal arrives with its peer review; a bootstrap or release pull request opens"
+      inputs:
+        - {artifact: architecture, from: Architect}
+        - {artifact: test-strategy, from: Verifier}
+        - {artifact: cicd, from: Operator}
+        - {artifact: delivery-system, from: Delivery}
+        - {artifact: role-proposal, from: Delivery}
+      value: "Decides whether the work is sound and governed, and approves, returns or declines each artifact for the concerns the challenger and peers cannot judge: cost, overlap, risk and governance. An agent cannot hold this seat"
+      outputs:
+        - {artifact: "approved architecture, test strategy and CI/CD approach", for: Builder, acceptance: "Builder can implement from them without asking what they should have said (the consumer duty)"}
+        - {artifact: "approved or declined role proposals, with docs/roles.yml changes", for: Steward, acceptance: "Every roles-file change carries an approved role proposal with its peer review (E17)"}
+      standards: [docs/dor/floor.yml, docs/artifact-types.yml, docs/enforcement.yml]
+      templates: [docs/templates/review.md, docs/templates/role-proposal.md]
+      verifier:
+        seat: Steward
+        evidence: "Merge history shows a human merge on every protected branch; roles-file changes match an approved proposal (E17); required checks green on each merge"
   Product:
     kind: agent
     concern: Who uses this, and for what?
     qualified_layers: []
+    job:
+      trigger: "The Intent Owner supplies a problem and discovery starts; an increment plan is due before the plan gate; an increment ends and needs a verdict"
+      inputs:
+        - {artifact: "product description or problem statement", from: Intent Owner}
+        - {artifact: review, from: Verifier}
+        - {artifact: architecture, from: Architect}
+        - {artifact: "increment verify evidence", from: Builder}
+      value: "Turns the problem into users, use cases with main, alternate and failure paths, kill boundaries and an increment plan that demonstrates use cases, then turns the Verifier's evidence into a validation verdict. Owns backlog content"
+      outputs:
+        - {artifact: "intent, business case, users and use cases", for: Architect, acceptance: "Every use case names its user and lists main, alternate and failure paths with expected outcomes (floor C3, C7)"}
+        - {artifact: increment-plan, for: Delivery, acceptance: "Each increment names the use cases it demonstrates (floor P1)"}
+        - {artifact: validation-verdict, for: Intent Owner, acceptance: "Cites the Verifier's evidence and states accept or reject per use case in scope (floor R1)"}
+      standards: [docs/dor/floor.yml, docs/artifact-types.yml]
+      templates: [docs/templates/intent.md, docs/templates/business-case.md, docs/templates/users-use-cases.md, docs/templates/increment-plan.md, docs/templates/increment-intent.md, docs/templates/story.md, docs/templates/validation-verdict.md, docs/templates/benefits-check.md]
+      verifier:
+        seat: Verifier
+        evidence: "A review file beside each Product artifact, answered item by item (E10); every use case lists its failure paths (floor C7)"
   Delivery:
     kind: agent
     concern: Is the work cut, ordered and flowing well?
     qualified_layers: []
+    job:
+      trigger: "An increment plan is approved; a cycle starts or exits; a flow metric breaches its limit; a seat gap needs a role proposal"
+      inputs:
+        - {artifact: increment-plan, from: Product}
+        - {artifact: story, from: Product}
+        - {artifact: "audit of process adherence", from: Steward}
+      value: "Owns the delivery process: hierarchy, story template, prioritization rule, cadence, track cap and metrics computed from the repository. Cuts and orders work so that every task a fresh session pulls carries its own input manifest"
+      outputs:
+        - {artifact: delivery-system, for: Product, acceptance: "Names hierarchy, story template, prioritization rule, cadence, track cap and metrics (floor P5)"}
+        - {artifact: role-proposal, for: Engineering Lead, acceptance: "Complete job description and independent peer review (E17)"}
+      standards: [docs/dor/floor.yml, docs/artifact-types.yml]
+      templates: [docs/templates/delivery-system.md, docs/templates/role-proposal.md]
+      verifier:
+        seat: Steward
+        evidence: "Cadence, track cap (E9) and story template use audited at each cycle exit; metrics recomputed from the repository, never self-reported"
   Architect:
     kind: agent
     concern: How is the system shaped, and does it meet its NFRs?
     qualified_layers: [data, services-apis, integration, frontend, deployment-runtime]
+    job:
+      trigger: "The business case and use cases are approved; NFRs are needed; a challenger finding or failed gate reopens the design"
+      inputs:
+        - {artifact: users-use-cases, from: Product}
+        - {artifact: business-case, from: Product}
+        - {artifact: risk-assessment, from: Operator}
+        - {artifact: review, from: Verifier}
+      value: "Shapes the system: NFRs with targets, a conceptual design that maps every use case to a capability, and a target architecture with one section per layer, each with failure modes and an ADR for every cross-cutting choice. Owns the data layer unless a Data Architect is adopted"
+      outputs:
+        - {artifact: architecture, for: Builder, acceptance: "Each layer section can be built from without asking what it should have said; required diagrams present (floor D2, D3, D13)"}
+        - {artifact: nfr, for: Verifier, acceptance: "Each NFR has a target or a signed not-applicable, so a test type can be named for it (floor C4, D5)"}
+        - {artifact: conceptual-design, for: Product, acceptance: "Every use case maps to a system capability (floor D1)"}
+      standards: [docs/dor/floor.yml, docs/standards/data/README.md]
+      templates: [docs/templates/nfr.md, docs/templates/conceptual-design.md, docs/templates/architecture.md, docs/templates/adr.md]
+      verifier:
+        seat: Verifier
+        evidence: "A review file beside each Architect artifact; required diagrams present and well formed (E16); layer authors and challengers qualified and distinct (SEATS)"
   Designer:
     kind: agent
     concern: How does it look and behave for users?
     qualified_layers: [frontend]
+    job:
+      trigger: "Use cases are approved and the product has a user interface; a UX challenge finding reopens a flow"
+      inputs:
+        - {artifact: users-use-cases, from: Product}
+        - {artifact: architecture, from: Architect}
+      value: "Designs how the product looks and behaves for its users: experience intent, flows, navigation and states, and the design system, so that interface decisions are drawn and not left to be read many ways"
+      outputs:
+        - {artifact: ux-design, for: Builder, acceptance: "Every use case maps to a flow; user-flow and navigation diagrams present (floor D4, D13)"}
+        - {artifact: "design system", for: Builder, acceptance: "Components and tokens a builder can use without choosing styles itself"}
+      standards: [docs/dor/floor.yml, docs/artifact-types.yml]
+      templates: [docs/templates/ux-design.md]
+      verifier:
+        seat: Verifier
+        evidence: "A review file beside each UX artifact; required diagrams present (E16); each use case traced to a flow"
   Verifier:
     kind: agent
     concern: Does it do what the artifacts say?
     qualified_layers: [deployment-runtime, operations]
+    job:
+      trigger: "An artifact enters review; tests for an increment are committed; an increment is ready for validation"
+      inputs:
+        - {artifact: "any artifact in review", from: Product}
+        - {artifact: architecture, from: Architect}
+        - {artifact: cicd, from: Operator}
+        - {artifact: "increment verify evidence", from: Builder}
+      value: "Finds what is wrong, missing or inconsistent, as a fresh session, and states whether the work does what the artifacts say. Authors the test strategy and the standards the tests rely on, and never verifies its own work"
+      outputs:
+        - {artifact: review, for: Product, acceptance: "Each finding has a severity, and open_findings counts what is unanswered"}
+        - {artifact: review, for: Architect, acceptance: "Each finding has a severity, and open_findings counts what is unanswered"}
+        - {artifact: test-strategy, for: Builder, acceptance: "Names a test type for each NFR and an acceptance approach for each use case (floor D5)"}
+        - {artifact: "verification evidence", for: Product, acceptance: "Reproducible from CI; exit counts come from CI, not from a summary"}
+      standards: [docs/dor/floor.yml, docs/standards/data/README.md]
+      templates: [docs/templates/review.md, docs/templates/test-strategy.md, docs/templates/standard.md]
+      verifier:
+        seat: Steward
+        evidence: "A review file beside each approved artifact, answered item by item (E10); no session authored and challenged the same artifact (SEATS)"
   Builder:
     kind: agent
     concern: Code, pipeline code and implementation design
     qualified_layers: [data, services-apis, frontend, integration]
+    job:
+      trigger: "An increment intent is approved and its tests are red in CI; a task with an input manifest is pulled"
+      inputs:
+        - {artifact: increment-intent, from: Product}
+        - {artifact: architecture, from: Architect}
+        - {artifact: test-strategy, from: Verifier}
+        - {artifact: cicd, from: Operator}
+      value: "Implements to the approved architecture under the CI/CD approach, and writes the unit tests for its own code. Never writes the acceptance tests for its own work, and never introduces a dependency or pattern without an ADR"
+      outputs:
+        - {artifact: "implementation and implementation design", for: Verifier, acceptance: "Committed acceptance tests pass in CI, and a fresh reader explains the behaviour, failures included, to match the intent (floor I5)"}
+        - {artifact: "increment verify evidence", for: Verifier, acceptance: "Test results come from CI; no new skip without an expiry entry (floor I6)"}
+      standards: [docs/dor/floor.yml, docs/standards/data/README.md]
+      templates: [docs/templates/adr.md, docs/templates/story.md]
+      verifier:
+        seat: Verifier
+        evidence: "Tests seen red then green in CI per test; no early-return or blanket skip (E3); merged migrations unedited (E15); an ADR for every new dependency (floor I3)"
   Operator:
     kind: agent
     concern: Security, privacy, deployment and run
     qualified_layers: [deployment-runtime, operations, integration]
+    job:
+      trigger: "NFRs and architecture are approved; a deployment is due; a security, privacy or run incident opens"
+      inputs:
+        - {artifact: nfr, from: Architect}
+        - {artifact: architecture, from: Architect}
+        - {artifact: test-strategy, from: Verifier}
+        - {artifact: "increment verify evidence", from: Builder}
+      value: "Owns security, privacy, deployment and run: the risk assessment, the branching and CI/CD approach with every gate wired and smoke-tested, operational readiness, and the release decision backed by the post-deploy check"
+      outputs:
+        - {artifact: cicd, for: Builder, acceptance: "Every gate is wired and smoke-tested (floor P3)"}
+        - {artifact: ops-readiness, for: Engineering Lead, acceptance: "Covers observability, SLOs and rollback (floor P4)"}
+        - {artifact: release-decision, for: Intent Owner, acceptance: "Attaches the automated post-deploy output: health, build version, seeded smoke tests (floor R2)"}
+      standards: [docs/dor/floor.yml, docs/enforcement.yml]
+      templates: [docs/templates/risk-assessment.md, docs/templates/cicd.md, docs/templates/ops-readiness.md, docs/templates/release-decision.md]
+      verifier:
+        seat: Verifier
+        evidence: "A review file beside each Operator artifact; the smoke-cycle record in docs/archive; post-deploy check output once E13 ships"
   Steward:
     kind: agent
     concern: Was the process followed? Keeps the registry and audits the gates.
     holds_no_artifact_seat: true
+    job:
+      trigger: "Each cycle exit; each pull request to a protected branch; a near-miss or an unowned-decision failure is reported"
+      inputs:
+        - {artifact: review, from: Verifier}
+        - {artifact: delivery-system, from: Delivery}
+        - {artifact: cicd, from: Operator}
+      value: "Audits whether the process was followed and keeps the registry. Holds no seat on any artifact, so it can judge every seat. Files every near-miss, and the countermeasure is a check, never a reminder to be careful"
+      outputs:
+        - {artifact: "registry entry", for: Engineering Lead, acceptance: "Has a hazard class, cause and a countermeasure that ships as a check (E11)"}
+        - {artifact: "audit of process adherence", for: Delivery, acceptance: "Names each deviation with the file or check result that shows it"}
+      standards: [docs/enforcement.yml, docs/dor/floor.yml]
+      templates: [docs/templates/registry-entry.md]
+      verifier:
+        seat: Engineering Lead
+        evidence: "Registry integrity (E11); the Engineering Lead's spot reads of audit records at each cycle exit"
 
 # Seats chartered in advance but not held by default. Adopt one through a role proposal:
 # add it to a holder below. The seat check refuses an artifact that names an optional seat
@@ -60,6 +228,21 @@ optional_seats:
     qualified_layers: [data, integration]
     owns: [docs/standards/data/, contracts/, migrations]
     adopt_when: docs/standards/data/README.md#when-to-adopt-a-data-architect-seat
+    job:
+      trigger: "A data adoption trigger in docs/standards/data/README.md fires; a schema, contract or reference-data change is proposed"
+      inputs:
+        - {artifact: architecture, from: Architect}
+        - {artifact: nfr, from: Architect}
+        - {artifact: "data standards", from: Verifier}
+      value: "Owns the shape, ownership, versioning and quality of data: the data model, contracts between components, schema change policy and reference and seed data, so that no schema is guessed"
+      outputs:
+        - {artifact: "data section of the architecture, with data-model diagram", for: Builder, acceptance: "Entities and relationships drawn and matching the schema (floor D13)"}
+        - {artifact: "data contracts", for: Builder, acceptance: "Each has a producer and at least one consumer (floor D12, E14)"}
+      standards: [docs/standards/data/README.md, docs/dor/floor.yml]
+      templates: [docs/templates/architecture.md, docs/templates/standard.md]
+      verifier:
+        seat: Verifier
+        evidence: "A review file beside each data artifact; contract files pass E14; migrations append-only (E15)"
 
 # domain-core is listed by no seat on purpose. Each project names the seat that holds
 # its domain expertise here, or the D6 check fails and a crew review opens.
