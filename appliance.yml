@@ -1,0 +1,20 @@
+# Appliance settings for this project.
+# Filled at bootstrap, approved by the Engineering Lead.
+
+appliance_version: 0.1.0
+floor_version: 0.1.0          # pinned Definition of Ready floor (docs/dor/floor.yml)
+
+grade: light                  # light | standard | assured (approved by the Intent Owner, floor row C6)
+
+autonomy:
+  merge_to_main: human        # human | auto-on-green
+  merge_to_lanes: human       # human | auto-on-green
+
+# One person holds both the Intent Owner and Engineering Lead seats.
+# When true, CLAUDE.md must carry the single-principal disclosure.
+single_principal: true
+
+caps:
+  constitution_bytes: 16000   # CLAUDE.md size budget (design rule 8)
+  state_lines: 200            # STATE.md line cap
+  track_cap: 2                # parallel delivery tracks

@@ -1,0 +1,90 @@
+# Enforcement registry: every rule names its machine.
+# A rule with no implemented check is advisory (design rule 4).
+# status: implemented | partial | planned
+# where: the place the check runs.
+
+version: 0.1.0
+
+checks:
+  E1:
+    name: One identity per seat, approvals bound to identity
+    where: repository settings, CI
+    status: planned
+    planned_for: v0.2
+    note: >
+      Until E1 ships, front-matter seats are self-declared. The seat checks in
+      v0.1 catch inconsistent declarations, not false ones. The single-principal
+      disclosure in CLAUDE.md applies.
+  E2:
+    name: Red record per test; strict expected-fail on a test-only PR
+    where: CI
+    status: planned
+    planned_for: v0.3
+  E3:
+    name: No-op test lint (early return, catch-to-false, in-body and blanket skips)
+    where: pre-push, CI
+    status: partial
+    implemented: tools/checks/check_test_noops.py
+    note: Static lint is implemented. The runtime zero-assertion check ships with E2.
+  E4:
+    name: Every test ID used in a test exists in the contract file and in source
+    where: CI
+    status: planned
+    planned_for: v0.2
+  E5:
+    name: Rulesets on every branch pattern, admins included, trigger coverage checked
+    where: repository settings, CI
+    status: planned
+    planned_for: v0.2
+  E6:
+    name: Gate canary on every lane and worktree each cycle
+    where: scheduled CI
+    status: planned
+    planned_for: v0.3
+  E7:
+    name: Agent-harness hooks (worktree pin, stash and checkout filter, commit on stop, recovery)
+    where: agent harness
+    status: planned
+    planned_for: v0.2
+  E8:
+    name: Story test manifest checked at integration; exit counts from CI
+    where: CI
+    status: planned
+    planned_for: v0.2
+  E9:
+    name: Stated caps (state file size, constitution size, track count, shared-state lanes)
+    where: CI
+    status: partial
+    implemented: tools/checks/check_caps.py
+    note: Size and track caps are implemented. Shared-state lane checks ship with E7.
+  E10:
+    name: Front matter, trace, location, approval order and staleness
+    where: CI
+    status: partial
+    implemented: tools/checks/check_artifacts.py
+    note: >
+      Document IDs, parents, location, naming, approval order and staleness are
+      implemented. Registries generated from or tested against code are a project
+      concern, added per stack.
+  E11:
+    name: Registry integrity; health of non-required jobs
+    where: CI, scheduled CI
+    status: partial
+    implemented: tools/checks/check_registry.py
+    note: Registry integrity is implemented. Non-required job health ships with E6.
+  E12:
+    name: Validation environment built from CI definitions, migration and seed state checked
+    where: CI, validation environment
+    status: planned
+    planned_for: v0.2
+  DOR:
+    name: Definition of Ready floor completeness, finer never coarser, no blank rows
+    where: CI
+    status: implemented
+    implemented: tools/checks/check_dor.py
+  SEATS:
+    name: Seat separation on every artifact; holder conflicts; D6 seat-to-charter match
+    where: CI
+    status: implemented
+    implemented: tools/checks/check_seats.py
+    note: Checks declared seats. Binding seats to real identities is E1.

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Pre-push gate: runs the appliance checks before any push.
+# Paths resolve from the repository root, so the hook also works in linked worktrees
+# (WorldSIM NM-092: a CWD-relative hook was silently non-functional in worktrees).
+# Install once per clone:  git config core.hooksPath .githooks
+set -euo pipefail
+root="$(git rev-parse --show-toplevel)"
+cd "$root"
+python3 tools/checks/run_all.py
+python3 -m pytest -q tests
