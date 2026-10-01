@@ -16,6 +16,10 @@ Severity:
 - **medium:** blocks approval until the author answers it, with a fix or a reasoned decline.
 - **low:** may be deferred to the backlog with a note in the Answer column.
 
+The author answers each finding in the Answer column and writes Yes in Closed? once it is
+answered. The bootstrap review is the exception to the file name: it is
+`docs/bootstrap.review.md`, because the bootstrap has no artifact id.
+
 The author answers each finding in the Answer column. `open_findings` counts findings
 with no answer, plus every high finding not yet fixed.
 

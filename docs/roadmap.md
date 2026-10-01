@@ -29,7 +29,16 @@ Shipped so far:
   the hook hardened against redirected git (RG-001) and dirty trees, E10 finds stray
   artifacts, standard grade by default. Report: `docs/method/dryrun-1.md`.
 
+- **Dry run 2 fixes:** the bootstrap names the template commit, records the product
+  description in `STATE.md`, gives the answering session a seat and manifest, shows the
+  not-applicable row shape, says the files on disk win over injected context, and the
+  smoke items are runnable from their text. Report: `docs/method/dryrun-2.md`.
+
 Still to come:
+
+- **Bootstrap-complete check:** the untouched template passes every check with all slots
+  unfilled, so nothing catches a missed bootstrap edit. A flag in `appliance.yml` would let
+  a check refuse unfilled slots once bootstrap is declared done.
 
 - **E1:** one Git identity per agent seat; approvals bound to identity
 - **E5:** rulesets on every lane, admins included; trigger-coverage check

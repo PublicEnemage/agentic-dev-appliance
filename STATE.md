@@ -14,6 +14,10 @@ Capped at 200 lines by check E9.
 
 Cycle 1: setup, smoke cycle and discovery. No product code this cycle.
 
+## Product description
+
+Bootstrap copies the human's description of the product here, as given.
+
 ## Next
 
 - Bootstrap fills the constitution slots, roles and CODEOWNERS (`BOOTSTRAP.md`).
