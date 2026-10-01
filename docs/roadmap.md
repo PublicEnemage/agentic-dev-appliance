@@ -49,6 +49,10 @@ Shipped so far:
 
 Still to come:
 
+- **Build licence (design):** a renewable, computed approval to build, renewed by a
+  conformance review that measures code, features and standards against what was approved.
+  Design in `docs/method/build-licence.md`. First review run by hand in the pilot; build
+  the checks from what it finds.
 - **Exceptions (E18):** the artifact type, template and check, then the runner's waiver
   matching. Design in `docs/method/exceptions.md`.
 - **Registry check target:** E11 refuses "none" or "TBD" as a countermeasure but accepts any
