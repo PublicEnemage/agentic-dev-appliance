@@ -38,6 +38,7 @@ rows:
   P5: {status: open}
   P6: {status: open}
   P7: {status: open}
+  P8: {status: open}
   # increment
   I1: {status: per-increment}
   I2: {status: per-increment}

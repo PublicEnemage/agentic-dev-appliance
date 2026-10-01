@@ -5,7 +5,7 @@ Each version turns more rules into running checks. Status per check: `docs/enfor
 ## v0.1 — baseline (this version)
 
 - Templates for all 21 artifact types, the review file and the registry entry
-- Definition of Ready floor (36 rows) and the project checklist
+- Definition of Ready floor (37 rows) and the project checklist
 - Seats, charters, incompatible pairs and the minimum crew (`docs/roles.yml`)
 - Checks that read files: E10 artifacts and trace, SEATS with D6 and C8, DOR, E9 caps,
   E11 registry, E3 static no-op lint
@@ -20,6 +20,8 @@ Each version turns more rules into running checks. Status per check: `docs/enfor
 - **E8:** story test manifest checked at integration; exit counts from CI
 - **E4:** test IDs checked against the component contract file
 - **E12:** validation environment built from CI definitions
+- **E13:** post-deploy verification: health OK, reported version matches the build shipped,
+  seeded smoke test per use case in scope; output is the release evidence (P8, R2)
 - **Data discipline:** schema change policy, data contracts beyond APIs, data quality,
   reference and seed data ownership, governance, and the trigger for a Data Architect seat
 - Second blind backtest against the WorldSIM registry

@@ -22,7 +22,7 @@ it. A rule without a running check is a suggestion, so the status of every check
 | E9 | Constitution size, state file size, track cap, single-principal disclosure | Partial |
 | E11 | Registry integrity | Partial |
 | E3 | No-op test lint: early return, catch-to-false, blanket and unregistered skips | Partial (static) |
-| E1, E4, E5, E7, E8, E12 | Identities, contracts, rulesets, harness hooks, manifests, validation env | v0.2 |
+| E1, E4, E5, E7, E8, E12, E13 | Identities, contracts, rulesets, harness hooks, manifests, validation env, post-deploy verification | v0.2 |
 | E2, E6 | Red record per test, gate canary | v0.3 |
 
 Full detail: [docs/enforcement.yml](docs/enforcement.yml). Plan: [docs/roadmap.md](docs/roadmap.md).

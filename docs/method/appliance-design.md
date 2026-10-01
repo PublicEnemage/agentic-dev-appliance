@@ -8,7 +8,7 @@ Sep 30, 2026 · @Imran
 
 ## Summary
 
-WorldSIM grew about 30 agent roles, a 52 KB constitution, a 157 KB roster and 100 near-miss entries by July 2026. The appliance proposed here runs on 2 human seats and 5 agents, with 4 phase gates above 4 increment gates and a 36-row Definition of Ready floor. Everything else becomes an optional module or a project-level rule. A blind challenger backtested the draft against WorldSIM's 100 near-misses and found only 19 caught by a named check. Twelve enforcement checks now name the missing mechanisms.
+WorldSIM grew about 30 agent roles, a 52 KB constitution, a 157 KB roster and 100 near-miss entries by July 2026. The appliance proposed here runs on 2 human seats and 5 agents, with 4 phase gates above 4 increment gates and a 37-row Definition of Ready floor. Everything else becomes an optional module or a project-level rule. A blind challenger backtested the draft against WorldSIM's 100 near-misses and found only 19 caught by a named check. Twelve enforcement checks now name the missing mechanisms.
 
 The near-miss registry changes the emphasis of the charter. The lessons the charter headlines, such as generative consultation and panel-to-root-cause matching, account for about 6 of 100 entries. Roughly half of all entries fall into three mechanical classes: tests that pass without measuring anything, parallel agent sessions corrupting each other's work, and gates that existed only on paper. These three classes are universal to agentic development and can be closed by machinery rather than by instruction. The appliance should lead with them.
 
@@ -308,6 +308,7 @@ The Definition of Ready template is the operational checklist for every phase ga
 | P5 | Plan | Delivery system is written and owned: hierarchy, story template, prioritization rule, cadence, track cap and metrics |
 | P6 | Plan | Performance baseline is captured on a stable runner before the first increment starts |
 | P7 | Plan | A session-exit check refuses to end a session with uncommitted changes or an unwritten state file. Shared-state files change only on their own lane |
+| P8 | Plan | Every deployment exposes machine-readable health and version endpoints, and a seeded smoke test covers one main path per use case in scope. The version identifies the build, so a check can confirm the running build is the one shipped |
 | I1 | Increment | Increment intent is signed, with acceptance criteria testable without reading code |
 | I2 | Increment | Tests are committed and seen red in CI |
 | I3 | Increment | Every dependency, top-level folder or cross-cutting pattern the increment introduces has an ADR |
@@ -316,7 +317,7 @@ The Definition of Ready template is the operational checklist for every phase ga
 | I6 | Increment | No new per-test skip without an expiry entry, no file-level or blanket skip, no drop in collected test count, and fixtures still validate against the schema |
 | I7 | Increment | Every task carries an input manifest: the artifacts a fresh session reads to do the task. No task depends on prior conversation, and a decision made in conversation counts only once written to a named artifact |
 | R1 | Release | Every increment in scope has an approved validation verdict, with no open rejection |
-| R2 | Release | Operational readiness is proven in the target environment: monitoring live, SLOs measured, rollback rehearsed |
+| R2 | Release | Operational readiness is proven in the target environment by the automated post-deploy check (E13): health OK, reported version matches the build shipped, seeded smoke tests pass. Monitoring is live, SLOs measured, rollback rehearsed |
 | R3 | Release | Release notes and user documentation are written and approved by the Intent Owner |
 
 D2 and D6 together are the mechanism that answers the WorldSIM frontend question. D2 forces a frontend section to exist. D6 then asks who is qualified to author and challenge that section. With no Frontend Architect on the roster, D6 cannot be filled, and the blank row opens a crew review at the design gate.

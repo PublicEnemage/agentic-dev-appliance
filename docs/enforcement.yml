@@ -77,6 +77,16 @@ checks:
     where: CI, validation environment
     status: planned
     planned_for: v0.2
+  E13:
+    name: Post-deploy verification (health, version matches build shipped, seeded smoke test)
+    where: CI, deployment pipeline
+    status: planned
+    planned_for: v0.2
+    note: >
+      Runs after every deployment against the live instance. Its output is the
+      evidence for floor rows P8 and R2. Catches a stale build still running
+      (WorldSIM NM-046), a migration not applied (NM-049), and missing seed data
+      behind a silent error (NM-060).
   DOR:
     name: Definition of Ready floor completeness, finer never coarser, no blank rows
     where: CI

@@ -92,3 +92,12 @@ def test_refuses_approved_increment_intent_that_skips_increment_rows(repo):
     out = messages(check_dor.check(repo.root))
     assert "I2: approved increment intent does not answer this row" in out
     assert "I7: approved increment intent does not answer this row" in out
+
+
+def test_every_floor_row_names_registered_checks():
+    import yaml
+    from conftest import REPO
+    floor = yaml.safe_load((REPO / "docs/dor/floor.yml").read_text())
+    registered = set(yaml.safe_load((REPO / "docs/enforcement.yml").read_text())["checks"])
+    unknown = {(r["id"], c) for r in floor["rows"] for c in r["enforced_by"] if c not in registered}
+    assert not unknown, sorted(unknown)

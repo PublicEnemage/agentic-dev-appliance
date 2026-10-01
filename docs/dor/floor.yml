@@ -64,6 +64,8 @@ rows:
      rule: "Performance baseline is captured on a stable runner before the first increment starts"}
   - {id: P7, gate: plan, enforced_by: [E7, E9], judged_by: Engineering Lead,
      rule: "A session-exit check refuses to end a session with uncommitted changes or an unwritten state file. Shared-state files change only on their own lane"}
+  - {id: P8, gate: plan, enforced_by: [DOR, E13], judged_by: Operator,
+     rule: "Every deployment exposes machine-readable health and version endpoints, and a seeded smoke test covers one main path per use case in scope. The version identifies the build, so a check can confirm the running build is the one shipped"}
 
   - {id: I1, gate: increment, enforced_by: [DOR, E10], judged_by: Verifier,
      rule: "Increment intent is signed, with acceptance criteria testable without reading code"}
@@ -82,7 +84,7 @@ rows:
 
   - {id: R1, gate: release, enforced_by: [DOR, E10], judged_by: Intent Owner,
      rule: "Every increment in scope has an approved validation verdict, with no open rejection"}
-  - {id: R2, gate: release, enforced_by: [DOR], judged_by: Engineering Lead,
-     rule: "Operational readiness is proven in the target environment: monitoring live, SLOs measured, rollback rehearsed"}
+  - {id: R2, gate: release, enforced_by: [DOR, E13], judged_by: Engineering Lead,
+     rule: "Operational readiness is proven in the target environment by the automated post-deploy check: health OK, reported version matches the build shipped, seeded smoke tests pass. Monitoring is live, SLOs measured, rollback rehearsed. The check's output is the evidence; nobody verifies by eye"}
   - {id: R3, gate: release, enforced_by: [DOR], judged_by: Intent Owner,
      rule: "Release notes and user documentation are written and approved by the Intent Owner"}
