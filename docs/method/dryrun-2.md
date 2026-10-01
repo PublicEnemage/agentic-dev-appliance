@@ -70,8 +70,8 @@ that sentence is corrected.
 The first attempt's bootstrap session had the filled-in run 1 constitution in its
 context. This session's own context reached every agent it started, and it cannot be
 stripped from inside it. After the leaking clones were moved aside, the second attempt
-still wrote the same four principles as run 1, with light rewording. Every session
-reported other projects' constitutions and the person's memory notes in its context.
+still wrote the same four principles as run 1, with light rewording. Four of the five sessions reported other projects' constitutions and the person's memory
+notes in their context; the smoke session did not say.
 
 What this affects: the product choices (principles, assumptions) are not independent
 evidence. The method counts, the findings and the smoke results come from the procedure
@@ -79,7 +79,9 @@ and the checks, and are usable. A clean product-side test needs a session starte
 directly in the new repository, not by an observer.
 
 Attempt 1 (discarded, 14 method and 8 product questions) is kept out of the repository.
-Its method count is above the attempt 2 count, so the leak does not explain the fall.
+Both attempts had leaked context, so the leak does not separate them. The drop from 14 to
+7 between them shows how much one run varies, and the fall from run 1's 19 should be read
+as a direction, not a measured size.
 
 ## What the run found
 
