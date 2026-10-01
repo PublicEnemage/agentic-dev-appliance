@@ -32,6 +32,7 @@ setup, the smoke cycle and the discovery track.
    - a registry entry with a gap in its IDs (E11)
    - a contract file with no consumers (E14)
    - an edit to a merged migration (E15)
+   - an architecture artifact in review with no data-model diagram (E16)
 
    Record the date and results in `STATE.md`. Discard the branch.
 9. **Discovery track.** Write the intent and business case with the Intent Owner, then

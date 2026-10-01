@@ -35,3 +35,14 @@ def test_template_seats_pass_the_seat_check(repo, template):
     report = check_seats.check(repo.root)
     seat_findings = [f for f in report.findings if f.check == "SEATS"]
     assert not seat_findings, messages(report)
+
+
+@pytest.mark.parametrize("template", TEMPLATES, ids=lambda p: p.stem)
+def test_template_carries_valid_starter_diagrams(template):
+    """Each required diagram appears in the template as a tagged, well-formed sample,
+    so a new artifact starts with the picture rather than a blank."""
+    from check_diagrams import diagram_problems
+    types_cfg = yaml.safe_load((REPO / "docs/artifact-types.yml").read_text())
+    meta, body = read_front_matter(template)
+    required = types_cfg["required_diagrams"].get(meta["type"], [])
+    assert diagram_problems(body, required, {}, types_cfg) == []

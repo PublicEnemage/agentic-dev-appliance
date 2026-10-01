@@ -32,6 +32,7 @@ rows:
   D10: {status: open}
   D11: {status: open}
   D12: {status: open}
+  D13: {status: open}
   # plan
   P1: {status: open}
   P2: {status: open}

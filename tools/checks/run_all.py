@@ -11,6 +11,7 @@ import sys
 import check_artifacts
 import check_caps
 import check_contracts
+import check_diagrams
 import check_dor
 import check_migrations
 import check_registry
@@ -32,6 +33,7 @@ def main(argv: list[str]) -> int:
         check_test_noops.check(root).emit("E3 test no-ops"),
         check_contracts.check(root).emit("E14 data contracts"),
         check_migrations.check(root, base).emit("E15 migrations"),
+        check_diagrams.check(root).emit("E16 diagrams"),
     ]
     failed = sum(results)
     print(f"\n{len(results) - failed}/{len(results)} checks passed")

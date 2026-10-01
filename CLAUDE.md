@@ -75,6 +75,8 @@ These are advisory until their check ships. Each names the check that will repla
   not its surface.
 - The countermeasure to a near-miss is never "be more careful". It is a redesign that
   ships as a check. File every near-miss in `docs/registry.md`.
+- Where a diagram and its text disagree, the diagram governs structure. Raise the gap as
+  a challenge finding (floor row D13).
 - A gap that no seat can judge opens a crew review (`docs/templates/role-proposal.md`).
   Prefer a rule or a tool to a new role.
 

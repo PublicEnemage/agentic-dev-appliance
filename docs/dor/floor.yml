@@ -54,6 +54,8 @@ rows:
      rule: "The data standards are approved, or each is signed not-applicable: schema change policy, data contracts, data quality, reference and seed data, data governance"}
   - {id: D12, gate: design, enforced_by: [DOR, E14], judged_by: Verifier,
      rule: "Every exchange named in the architecture's integration section has a contract file with a producer and at least one consumer"}
+  - {id: D13, gate: design, enforced_by: [DOR, E16], judged_by: Engineering Lead,
+     rule: "Conceptual design, architecture and UX artifacts carry their required diagrams as Mermaid code: capability map, context, components, data model with relationships, key interactions, deployment, user flows and navigation. Where a diagram and its text disagree, the diagram governs structure and the gap is a challenge finding"}
 
   - {id: P1, gate: plan, enforced_by: [DOR, E10], judged_by: Intent Owner,
      rule: "Each increment from G0 to MVP names the use cases it will demonstrate"}

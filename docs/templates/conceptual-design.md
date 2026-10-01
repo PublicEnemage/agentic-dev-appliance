@@ -13,9 +13,18 @@ approved_at: null
 
 # {{Title}}
 
-Floor row D1. The challenger reviews cold, in a fresh session.
+Floor rows D1, D13. The challenger reviews cold, in a fresh session.
 
 ## Capabilities
 | Use case | System capability |
 | --- | --- |
 | {{UC}} | {{capability}} |
+
+<!-- diagram: capability-map -->
+```mermaid
+flowchart LR
+  UC1[UC-1 Place an order] --> Cap1[Order capture]
+  UC2[UC-2 Track an order] --> Cap2[Order status]
+  Cap1 --> Cap3[Payment]
+  Cap2 --> Cap1
+```

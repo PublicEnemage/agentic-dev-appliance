@@ -101,6 +101,16 @@ checks:
     status: implemented
     implemented: tools/checks/check_migrations.py
     note: Compares against the base ref; fails if the base cannot be resolved.
+  E16:
+    name: Required diagrams as Mermaid code (presence, form, minimum size)
+    where: pre-push, CI
+    status: implemented
+    implemented: tools/checks/check_diagrams.py
+    note: >
+      Checks that each required diagram exists, uses the right Mermaid form, and has
+      enough parts and links to mean something. Whether a diagram matches the text and
+      the code is the challenger's call. A later check can cross-reference data-model
+      entities with the schema and component links with contract files (E14).
   DOR:
     name: Definition of Ready floor completeness, finer never coarser, no blank rows
     where: CI
