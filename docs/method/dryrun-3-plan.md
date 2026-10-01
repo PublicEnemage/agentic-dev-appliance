@@ -71,7 +71,10 @@ Paste with `{SEAT}` filled in. The preamble matches the earlier runs.
 > 3. **Help protocol.** Say what you will offer each seat, and when. Say what you will ask
 >    of each seat, where you will write the request so it survives the session, and how
 >    long you will wait for a response before escalating, and to whom.
-> 4. Log every point where the procedure left you guessing, labelled PRODUCT or METHOD.
+> 4. **Authority.** State what you decide alone, what you decide only after consulting
+>    which seat, when you ask before acting, and what you would refuse to accept or do.
+>    Say where the procedure left you less room than your job description implies.
+> 5. Log every point where the procedure left you guessing, labelled PRODUCT or METHOD.
 >
 > Commit to branch `jobreview-{SEAT}` and push it. Never push to `main`. Do not edit
 > `docs/roles.yml`; propose changes in your file.
@@ -85,6 +88,7 @@ Paste with `{SEAT}` filled in. The preamble matches the earlier runs.
 | Unmatched outputs found by peers (16 on the baseline below) | at least 10 |
 | Overlaps flagged | Product and Delivery (stories, work plans); Verifier and Steward (audit) |
 | Help asks with no matching offer on the first draft | at least a third |
+| Authority statements that claim more than the descriptions give | at least 4 of 8; the Steward and Verifier claim the right to refuse |
 | Sessions reporting other projects' files in context | none; memory notes only, if memory is on |
 
 ## Baseline measured on the drafts
@@ -99,10 +103,21 @@ descriptions:
 E17 does not catch these. It checks that the seats named exist, not that sender and
 consumer agree. An earlier statement that E17 confirms the wiring was too strong.
 
+## What the authority question tests
+
+NM-014 in the WorldSIM registry names the cost of over-prescribing: a lead who answers
+every mistake with a longer instruction gets a team that is compliant but not capable.
+The appliance's remedy is to carry rules in standing documents and let the job
+description carry identity. This run asks each seat to say what authority it takes before
+any rule is written, so a block that grants authority is built from what the seats claim.
+
 ## Build list after the run
 
 Each item waits for what the run teaches.
 
+0. **Authority block** in every job description: what the seat decides alone, decides after
+   consulting, asks before doing, and may refuse. E17 checks that it exists and that each
+   escalation names a real seat.
 1. **Help block** in every job description: offers (to which seat, what, when) and asks
    (of which seat, where written, response time, escalation). E17 refuses an ask with no
    matching offer from the seat asked.

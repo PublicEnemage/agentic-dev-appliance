@@ -39,8 +39,19 @@ Shipped so far:
   evidence. Peers recommend on demand, and the Engineering Lead approves with that
   endorsement. Open: backfill the existing agent seats through the same review.
 
+- **Agency and exceptions (design):** design rule 10 (prescribe outcomes and gates, let the
+  job description carry judgment) and a constitution line. The exception mechanism is
+  designed in `docs/method/exceptions.md`: a time-boxed, capped, priced artifact, with
+  expiry that fails the build, one renewal, repeat detection, a live budget and a short
+  non-waivable list. Build follows dry run 3.
+
 Still to come:
 
+- **Exceptions (E18):** the artifact type, template and check, then the runner's waiver
+  matching. Design in `docs/method/exceptions.md`.
+- **Registry check target:** E11 refuses "none" or "TBD" as a countermeasure but accepts any
+  other text, so a prompt tweak passes. The Check field should name an existing check or
+  repository path.
 - **Bootstrap-complete check:** the untouched template passes every check with all slots
   unfilled, so nothing catches a missed bootstrap edit. A flag in `appliance.yml` would let
   a check refuse unfilled slots once bootstrap is declared done.

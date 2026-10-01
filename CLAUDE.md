@@ -79,6 +79,9 @@ These are advisory until their check ships. Each names the check that will repla
   a challenge finding (floor row D13).
 - A gap that no seat can judge opens a crew review (`docs/templates/role-proposal.md`).
   Prefer a rule or a tool to a new role.
+- Prescribe outcomes and gates, not steps. Rules live in standing documents and job
+  descriptions; a prompt names the outcome. When an agent errs, fix the standing document
+  or the check, never the prompt.
 - Never declare a qualification, a seat or an approval to make a check pass. A failing
   check that tells the truth is worth more than a passing one that does not.
 
