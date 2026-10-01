@@ -3,8 +3,8 @@ id: STD-005
 type: standard
 title: Data governance
 status: draft
-author_seat: Operator
-challenger_seat: Architect
+author_seat: Architect
+challenger_seat: Verifier
 approver: Engineering Lead
 parents: []
 approved_at: null
@@ -13,7 +13,8 @@ approved_at: null
 # Data governance
 
 - **Kind:** craft standard
-- **Owning seat:** Operator, who owns the classification rule (floor row C5)
+- **Owning seat:** Operator, who owns the classification rule (floor row C5). The template
+  draft was written in the Architect seat; the Operator maintains it once approved
 - **Applies to:** all data the system stores, processes or exports
 
 A draft default. Adapt the clauses at bootstrap, then challenge and approve this file.

@@ -24,6 +24,11 @@ Shipped so far:
   diagrams for context, components, data model, key interactions, deployment, user flows
   and navigation. Floor row D13 and check E16. The floor is now 41 rows.
 
+- **Dry run 1 fixes:** the bootstrap rewritten for a cold start (seats, manifests, the
+  challenge, answering findings, the smoke record), tests isolated from project settings,
+  the hook hardened against redirected git (RG-001) and dirty trees, E10 finds stray
+  artifacts, standard grade by default. Report: `docs/method/dryrun-1.md`.
+
 Still to come:
 
 - **E1:** one Git identity per agent seat; approvals bound to identity
@@ -35,6 +40,7 @@ Still to come:
 - **E13:** post-deploy verification: health OK, reported version matches the build shipped,
   seeded smoke test per use case in scope; output is the release evidence (P8, R2)
 - Second blind backtest against the WorldSIM registry
+- Dry run 2 from the fixed template, to see whether the method questions fall
 
 ## v0.3 — the hardest checks
 

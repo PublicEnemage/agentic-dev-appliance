@@ -1,5 +1,5 @@
-"""Shared fixtures. Each test builds a small appliance repository in a temp folder,
-copies this repository's configuration into it, and adds the artifacts it needs.
+"""Shared fixtures. Each test builds a small appliance repository in a temp folder from
+the appliance's own files plus fixed project defaults, and adds the artifacts it needs.
 
 Every check has at least one test where the check passes and several where it must
 refuse. A check that has never been seen to refuse is not trusted (design rule 2).
@@ -17,18 +17,32 @@ import yaml
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "tools" / "checks"))
 
-CONFIG_FILES = [
-    "appliance.yml",
-    "CLAUDE.md",
-    "STATE.md",
+FIXTURES = REPO / "tests" / "fixtures" / "defaults"
+
+# Files the appliance owns. Projects do not edit them, so tests read the real ones.
+APPLIANCE_FILES = [
     "docs/artifact-types.yml",
-    "docs/roles.yml",
     "docs/enforcement.yml",
     "docs/dor/floor.yml",
-    "docs/dor/checklist.yml",
-    "docs/registry.md",
-    "docs/skips.yml",
 ]
+
+# Files each project edits at bootstrap. Tests use fixed defaults instead, so a project's
+# own choices never break the template's tests (dry run 1, Q11).
+PROJECT_DEFAULTS = {
+    "appliance.yml": "appliance.yml",
+    "CLAUDE.md": "CLAUDE.md",
+    "STATE.md": "STATE.md",
+    "docs/roles.yml": "roles.yml",
+    "docs/registry.md": "registry.md",
+    "docs/skips.yml": "skips.yml",
+}
+
+
+def default_checklist() -> str:
+    floor = yaml.safe_load((REPO / "docs/dor/floor.yml").read_text())
+    rows = {r["id"]: {"status": "per-increment" if r["gate"] == "increment" else "open"} for r in floor["rows"]}
+    return yaml.safe_dump({"floor_version": floor["version"], "rows": rows}, sort_keys=False)
+
 
 TYPES = yaml.safe_load((REPO / "docs/artifact-types.yml").read_text())["types"]
 
@@ -79,10 +93,15 @@ class Repo:
 
 @pytest.fixture
 def repo(tmp_path: Path) -> Repo:
-    for rel in CONFIG_FILES:
+    for rel in APPLIANCE_FILES:
         dst = tmp_path / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(REPO / rel, dst)
+    for rel, name in PROJECT_DEFAULTS.items():
+        dst = tmp_path / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(FIXTURES / name, dst)
+    (tmp_path / "docs/dor/checklist.yml").write_text(default_checklist())
     return Repo(tmp_path)
 
 

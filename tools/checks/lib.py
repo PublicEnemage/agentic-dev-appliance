@@ -47,6 +47,19 @@ class Report:
         return 0 if self.ok else 1
 
 
+def clean_git_env() -> dict[str, str]:
+    """The environment without variables that redirect git to another repository.
+
+    Git sets GIT_DIR, GIT_WORK_TREE and GIT_INDEX_FILE while a hook runs. A git command
+    started from inside the hook inherits them and acts on the hooked repository, whatever
+    its working directory. Registry entry RG-001: tests run by the pre-push hook committed
+    into the real repository and flipped it to a bare repository, while reporting a pass.
+    GIT_CONFIG_* variables are kept; they carry proxy and credential settings.
+    """
+    import os
+    return {k: v for k, v in os.environ.items() if not k.startswith("GIT_") or k.startswith("GIT_CONFIG")}
+
+
 def repo_root(start: Path | None = None) -> Path:
     """Find the repository root: the nearest folder holding appliance.yml."""
     here = (start or Path.cwd()).resolve()

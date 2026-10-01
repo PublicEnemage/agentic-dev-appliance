@@ -46,6 +46,8 @@ def check(root: Path) -> Report:
             report.add("E14", rel, "a contract must be a mapping")
             continue
         for f in REQUIRED:
+            if f == "consumers" and f in c:
+                continue
             if f not in c or c[f] in (None, "", [], {}):
                 report.add("E14", rel, f"missing '{f}'")
         if c.get("kind") and c["kind"] not in KINDS:

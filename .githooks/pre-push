@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
 # Pre-push gate: runs the appliance checks before any push.
+# Install once per clone:  git config core.hooksPath .githooks
+# The setting applies to every worktree of the clone, which is intended.
+#
 # Paths resolve from the repository root, so the hook also works in linked worktrees
 # (WorldSIM NM-092: a CWD-relative hook was silently non-functional in worktrees).
-# Install once per clone:  git config core.hooksPath .githooks
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
+
+# The checks read the working tree, so the working tree must be what is being pushed.
+# Uncommitted or untracked changes would let a broken commit pass, or block a good one.
+if [ -n "$(git status --porcelain)" ]; then
+  echo "pre-push: uncommitted or untracked changes present. Commit or remove them, then push." >&2
+  git status --short >&2
+  exit 1
+fi
+
+# Git sets these while a hook runs. Any git command started below would inherit them and
+# act on this repository instead of its own (registry entry RG-001). Clear them.
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_PREFIX GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES
+
 python3 tools/checks/run_all.py
 python3 -m pytest -q tests

@@ -4,6 +4,7 @@ import check_contracts
 import check_migrations
 import check_seats
 from conftest import messages
+from lib import clean_git_env
 
 GOOD = """id: orders.created
 kind: event
@@ -66,7 +67,7 @@ def test_refuses_unparseable_contract(repo):
 # E15 append-only migrations
 
 def git(root, *args):
-    subprocess.run(["git", *args], cwd=root, check=True, capture_output=True)
+    subprocess.run(["git", *args], cwd=root, check=True, capture_output=True, env=clean_git_env())
 
 
 def base_commit(repo):
@@ -75,7 +76,7 @@ def base_commit(repo):
     git(repo.root, "init", "-q", "-b", "main")
     git(repo.root, "-c", "user.name=t", "-c", "user.email=t@t", "add", "-A")
     git(repo.root, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "base")
-    out = subprocess.run(["git", "rev-parse", "HEAD"], cwd=repo.root, capture_output=True, text=True, check=True)
+    out = subprocess.run(["git", "rev-parse", "HEAD"], cwd=repo.root, capture_output=True, text=True, check=True, env=clean_git_env())
     return out.stdout.strip()
 
 
@@ -141,3 +142,34 @@ def test_adopted_optional_seat_passes(repo):
 def test_refuses_data_architect_held_with_builder(repo):
     repo.edit_yaml("docs/roles.yml", lambda r: r["holders"].update({"Agent C": ["Builder", "Data Architect"]}))
     assert "holds incompatible seats Builder and Data Architect" in messages(check_seats.check(repo.root))
+
+
+def test_git_from_inside_a_hook_never_touches_the_hooked_repository(repo, tmp_path, monkeypatch):
+    """RG-001. Git sets GIT_DIR while a hook runs. Simulate that with a decoy repository:
+    the tests' own git calls and check E15 must leave the decoy untouched."""
+    decoy = tmp_path / "decoy"
+    decoy.mkdir()
+    git(decoy, "init", "-q", "-b", "main")
+    (decoy / "f.txt").write_text("x")
+    git(decoy, "-c", "user.name=t", "-c", "user.email=t@t", "add", "-A")
+    git(decoy, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "decoy")
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=decoy, capture_output=True, text=True, env=clean_git_env()).stdout
+    monkeypatch.setenv("GIT_DIR", str(decoy / ".git"))
+    monkeypatch.setenv("GIT_WORK_TREE", str(decoy))
+    base = base_commit(repo)
+    repo.write("migrations/002_add_total.sql", "ALTER TABLE orders ADD total NUMERIC;\n")
+    commit_all(repo)
+    assert check_migrations.check(repo.root, base).ok
+    monkeypatch.delenv("GIT_DIR")
+    monkeypatch.delenv("GIT_WORK_TREE")
+    after = subprocess.run(["git", "rev-parse", "HEAD"], cwd=decoy, capture_output=True, text=True, env=clean_git_env()).stdout
+    bare = subprocess.run(["git", "config", "--get", "core.bare"], cwd=decoy, capture_output=True, text=True, env=clean_git_env()).stdout.strip()
+    assert after == head
+    assert bare == "false"
+
+
+def test_empty_consumer_list_is_reported_once(repo):
+    repo.write("contracts/orders-created.yml", GOOD.replace("consumers: [billing-service]", "consumers: []"))
+    out = messages(check_contracts.check(repo.root))
+    assert "no consumers" in out
+    assert "missing 'consumers'" not in out

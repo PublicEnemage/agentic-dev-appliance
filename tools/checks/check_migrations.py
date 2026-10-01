@@ -16,11 +16,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-from lib import Report, load_yaml, root_from_argv
+from lib import Report, clean_git_env, load_yaml, root_from_argv
 
 
 def git(root: Path, *args: str) -> subprocess.CompletedProcess:
-    return subprocess.run(["git", *args], cwd=root, capture_output=True, text=True)
+    return subprocess.run(["git", *args], cwd=root, capture_output=True, text=True, env=clean_git_env())
 
 
 def check(root: Path, base: str | None = None) -> Report:

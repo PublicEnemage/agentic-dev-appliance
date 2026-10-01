@@ -1,0 +1,11 @@
+# Skip registry. A skipped test must cite an entry here, and the entry must not be expired.
+# Skips apply to one test, never a file or a class (check E3).
+#
+# skips:
+#   - id: SKIP-001
+#     test: tests/test_example.py::test_name
+#     owner: Verifier
+#     expires: 2026-11-01
+#     reason: Upstream fixture not available until INC-004
+
+skips: []
