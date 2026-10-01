@@ -517,10 +517,34 @@ Every proposal states:
 
 - the evidence: registry IDs, challenger findings or the unowned decision
 - why a rule or tool will not close the gap
-- the charter: concern, owned files, seats taken, incompatible pairs
 - the type: standing, surge with an end date, or advisory (consulted only)
 - the cost in sessions per cycle
 - the success measure and the review date
+- the job description, in front matter so a check can read it:
+  - the **trigger** that puts the seat to work
+  - the **inputs**, each with the artifact and the seat that supplies it
+  - the **value**: what the seat does with the inputs that no other seat does
+  - the **outputs**, each with the seat that consumes it and the acceptance test that
+    consumer applies
+  - the **standards and templates** it follows
+  - an independent **verifier**: a seat other than the author, the proposed seat and the
+    author's holder, with the evidence it inspects to confirm the seat follows its own
+    process
+- a **peer review**: the seats that send it input, consume its output or give up work to it
+  each recommend accept, accept with conditions or reject, and say what they would hand
+  over or take, with evidence. The group's recommendation is no more favourable than its
+  least favourable member.
+
+The peer review is how demand is shown. A seat that no peer would feed or consume has no
+demand. The Engineering Lead reads the peer recommendation before approving, and approves
+or declines for the concerns the peers cannot judge: cost, overlap and governance. Check
+E17 enforces that the job description is complete and the review independent. It does not
+judge whether either is right. That stays with the peers, the challenger and the
+Engineering Lead.
+
+Until a seat's charter has gone through this review, the roles file lists it as a charter,
+not a demonstrated seat. The existing agent seats predate E17; backfilling their job
+descriptions through the same proposal is open work.
 
 ### Retirement keeps the crew honest
 

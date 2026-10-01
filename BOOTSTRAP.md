@@ -110,6 +110,7 @@ session records the difference in its log and carries on.
      commit the edit, then run `python3 tools/checks/check_migrations.py --base <the
      migration's commit>`. An uncommitted edit passes by design (E15)
    - an architecture artifact in review with no data-model diagram (E16)
+   - a role proposal in review whose verifier is its author (E17)
    - the pre-push hook, run directly, with one breaking change committed, such as a
      deleted floor row. The hook stops at its first failing command, so the tests do not
      run in the refused case
