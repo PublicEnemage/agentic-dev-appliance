@@ -542,9 +542,25 @@ E17 enforces that the job description is complete and the review independent. It
 judge whether either is right. That stays with the peers, the challenger and the
 Engineering Lead.
 
-Until a seat's charter has gone through this review, the roles file lists it as a charter,
-not a demonstrated seat. The existing agent seats predate E17; backfilling their job
-descriptions through the same proposal is open work.
+### A job description is mandatory for every seat
+
+WorldSIM's convention carries over: no seat exists without a written job description.
+This covers the human seats, the Steward and optional seats, not only new proposals. Each
+seat in `docs/roles.yml` has a `job` block with the same lines a proposal states, and E17
+refuses a roster in which any seat lacks one, names a phantom seat as a sender or
+consumer, cites a standard or template that does not exist, or has a verifier on the
+seat's own holder.
+
+Two sources keep the descriptions honest. The artifact register above says who authors,
+challenges and approves each artifact, so a seat's outputs and verifier follow from it
+and cannot contradict it. A project's bootstrap challenge reviews every job description
+against the product, and a seat added later passes the peer review. When a proposal is
+approved, its charter is copied into the roles file unchanged, and E17 refuses a roster
+whose job differs from the approved charter.
+
+The core descriptions are drafts for the Intent Owner and Engineering Lead, written from
+the register and the floor. They have not been through peer review as proposals. Peers
+should challenge them the first time a project runs a crew review.
 
 ### Retirement keeps the crew honest
 
