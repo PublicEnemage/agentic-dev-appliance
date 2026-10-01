@@ -15,7 +15,10 @@ setup, the smoke cycle and the discovery track.
    - `docs/roles.yml`: narrow each seat's `qualified_layers` to what its holder can judge,
      and name the seat for `domain-core` and any `qualified_domains`
    - `.github/CODEOWNERS`: the right handles
-   - `appliance.yml`: grade and merge autonomy
+   - `appliance.yml`: grade, merge autonomy, and the contracts and migrations folders
+   - `docs/standards/data/`: adapt each draft data standard, or mark it not-applicable in
+     the checklist with a reason (floor row D11). Decide whether a Data Architect seat is
+     needed now, using the triggers in that folder's README
 5. **Challenge the bootstrap.** A fresh session, a different seat, reviews the bootstrap
    output against `docs/dor/floor.yml` and `docs/roles.yml`. It is asked to find what is
    wrong or missing. The bootstrap author never approves its own setup.
@@ -27,6 +30,8 @@ setup, the smoke cycle and the discovery track.
    - a deleted floor row in `docs/dor/checklist.yml` (DOR)
    - a test with an early return (E3)
    - a registry entry with a gap in its IDs (E11)
+   - a contract file with no consumers (E14)
+   - an edit to a merged migration (E15)
 
    Record the date and results in `STATE.md`. Discard the branch.
 9. **Discovery track.** Write the intent and business case with the Intent Owner, then

@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # E15 compares against the base branch
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -21,6 +23,8 @@ jobs:
       - name: Check tests refuse what they should (seen to fail)
         run: python -m pytest -q tests
       - name: Appliance checks
+        env:
+          APPLIANCE_BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || 'origin/main' }}
         run: python tools/checks/run_all.py
       - name: Lint every executable script
         run: |

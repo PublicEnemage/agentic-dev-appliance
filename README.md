@@ -8,7 +8,7 @@ The method was harvested from [WorldSIM](https://github.com/PublicEnemage/worlds
 100-entry near-miss registry. The design rationale is in
 [docs/method/appliance-design.md](docs/method/appliance-design.md).
 
-## Status: v0.1 baseline
+## Status: v0.1 baseline, with the v0.2 data discipline
 
 v0.1 ships the templates and the checks that read files. Rules that need identities,
 harness hooks or CI history are still advisory, and each names the check that will replace
@@ -22,6 +22,8 @@ it. A rule without a running check is a suggestion, so the status of every check
 | E9 | Constitution size, state file size, track cap, single-principal disclosure | Partial |
 | E11 | Registry integrity | Partial |
 | E3 | No-op test lint: early return, catch-to-false, blanket and unregistered skips | Partial (static) |
+| E14 | Data contracts: producer, consumers, kind, version, compatibility, schema | Implemented |
+| E15 | Append-only migrations: no edit, delete or rename of a merged migration | Implemented |
 | E1, E4, E5, E7, E8, E12, E13 | Identities, contracts, rulesets, harness hooks, manifests, validation env, post-deploy verification | v0.2 |
 | E2, E6 | Red record per test, gate canary | v0.3 |
 
@@ -44,6 +46,7 @@ docs/artifact-types.yml   artifact folders, prefixes, approval rules
 docs/dor/                 Definition of Ready floor and this project's checklist
 docs/enforcement.yml      every check and its status
 docs/templates/           templates for every artifact type
+docs/standards/data/      data standards (draft defaults to adapt) and the Data Architect trigger
 docs/registry.md          near-misses and external issues
 docs/method/              design rationale, challenge record, backtest
 tools/checks/             the checks
