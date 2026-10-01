@@ -1,12 +1,13 @@
 """SEATS: seat separation on every artifact, holder conflicts, and the D6 and C8 matches.
 
 Refuses when:
-- roles.yml names an unknown seat, a holder holds an incompatible pair, or the
+- roles.yml names an unknown seat, a non-optional seat has no holder, a holder holds an incompatible pair, or the
   Steward shares a holder with another seat
 - the Intent Owner and Engineering Lead share a holder without single_principal: true
 - an artifact names an unknown seat, or its author, challenger and approver are
   not three different seats on three different holders
 - the Steward authors, challenges or approves an artifact
+- an artifact names an optional seat that no holder has adopted
 - a type that needs a human approver has an agent approver
 - an architecture artifact misses a D2 layer, or a layer's author and challenger
   are not distinct, qualified seats on different holders (D6)
@@ -37,7 +38,8 @@ def check(root: Path) -> Report:
     report = Report()
     cfg = load_config(root)
     roles = cfg["roles"]
-    seats = roles.get("seats") or {}
+    optional = roles.get("optional_seats") or {}
+    seats = {**optional, **(roles.get("seats") or {})}
     tdefs = cfg["types"]["types"]
     layers = cfg["types"]["layers"]
     pairs = [frozenset(p) for p in roles.get("incompatible_pairs") or []]
@@ -62,7 +64,7 @@ def check(root: Path) -> Report:
         if STEWARD in hset and len(hset) > 1:
             report.add("SEATS", roles_rel, f"holder '{holder}' holds the Steward seat with other seats")
     for s in seats:
-        if s not in held_by:
+        if s not in held_by and s not in optional:
             report.add("SEATS", roles_rel, f"seat '{s}' has no holder")
     if held_by.get("Intent Owner") and held_by.get("Intent Owner") == held_by.get("Engineering Lead"):
         if not cfg["appliance"].get("single_principal"):
@@ -89,6 +91,9 @@ def check(root: Path) -> Report:
                 report.add("SEATS", a.rel, f"the Steward holds no artifact seat ({field})")
         if unknown:
             continue
+        for field, s in named:
+            if s in optional and s not in held_by:
+                report.add("SEATS", a.rel, f"{field} '{s}' is an optional seat no one holds; adopt it through a role proposal")
         if author == challenger:
             report.add("SEATS", a.rel, "author and challenger are the same seat")
         if author in approvers:
@@ -121,6 +126,8 @@ def check(root: Path) -> Report:
                 for role, s in (("author", la), ("challenger", lc)):
                     if s not in seats:
                         report.add("D6", a.rel, f"layer '{layer}' {role} '{s}' is not a seat")
+                    elif s in optional and s not in held_by:
+                        report.add("D6", a.rel, f"layer '{layer}': {s} is an optional seat no one holds; adopt it through a role proposal")
                     elif not qualified(s, layer):
                         report.add("D6", a.rel, f"layer '{layer}': {s} is not qualified for this layer in its charter; open a crew review")
                 if la in seats and lc in seats and la != lc and held_by.get(la) == held_by.get(lc):

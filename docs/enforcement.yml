@@ -87,6 +87,20 @@ checks:
       evidence for floor rows P8 and R2. Catches a stale build still running
       (WorldSIM NM-046), a migration not applied (NM-049), and missing seed data
       behind a silent error (NM-060).
+  E14:
+    name: Data contracts (producer, consumers, kind, version, compatibility, schema; unique ids)
+    where: pre-push, CI
+    status: implemented
+    implemented: tools/checks/check_contracts.py
+    note: >
+      Checks contract files. Matching contracts against the events and fields used in
+      code is stack-specific and belongs in each project's contract tests (STD-002, D9).
+  E15:
+    name: Append-only migrations (no edit, delete or rename of a merged migration)
+    where: CI
+    status: implemented
+    implemented: tools/checks/check_migrations.py
+    note: Compares against the base ref; fails if the base cannot be resolved.
   DOR:
     name: Definition of Ready floor completeness, finer never coarser, no blank rows
     where: CI

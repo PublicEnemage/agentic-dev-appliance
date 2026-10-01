@@ -18,3 +18,7 @@ caps:
   constitution_bytes: 16000   # CLAUDE.md size budget (design rule 8)
   state_lines: 200            # STATE.md line cap
   track_cap: 2                # parallel delivery tracks
+
+data:
+  contracts_dir: contracts        # one YAML file per exchange (STD-002, check E14)
+  migrations_dir: migrations      # append-only migrations (STD-001, check E15)

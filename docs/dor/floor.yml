@@ -50,6 +50,11 @@ rows:
   - {id: D10, gate: design, enforced_by: [DOR], judged_by: Engineering Lead,
      rule: "A test data standard names its owner, how fixtures are generated from the schema, the data classification rule, and how seeding is checked"}
 
+  - {id: D11, gate: design, enforced_by: [DOR, E10], judged_by: Engineering Lead,
+     rule: "The data standards are approved, or each is signed not-applicable: schema change policy, data contracts, data quality, reference and seed data, data governance"}
+  - {id: D12, gate: design, enforced_by: [DOR, E14], judged_by: Verifier,
+     rule: "Every exchange named in the architecture's integration section has a contract file with a producer and at least one consumer"}
+
   - {id: P1, gate: plan, enforced_by: [DOR, E10], judged_by: Intent Owner,
      rule: "Each increment from G0 to MVP names the use cases it will demonstrate"}
   - {id: P2, gate: plan, enforced_by: [DOR, E10], judged_by: Engineering Lead,
@@ -81,6 +86,9 @@ rows:
      rule: "No new per-test skip without an expiry entry, no file-level or blanket skip, no drop in collected test count, and fixtures still validate against the schema"}
   - {id: I7, gate: increment, enforced_by: [DOR], judged_by: Delivery,
      rule: "Every task carries an input manifest: the artifacts a fresh session reads to do the task. No task depends on prior conversation"}
+
+  - {id: I8, gate: increment, enforced_by: [E15], judged_by: Architect,
+     rule: "Every schema change in the increment is a new migration that follows the expand, migrate, contract policy. Merged migrations are never edited or deleted"}
 
   - {id: R1, gate: release, enforced_by: [DOR, E10], judged_by: Intent Owner,
      rule: "Every increment in scope has an approved validation verdict, with no open rejection"}

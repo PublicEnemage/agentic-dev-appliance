@@ -24,6 +24,8 @@ dor:
     status: open
   I7:
     status: open
+  I8:
+    status: open
 ---
 
 # {{Title}}

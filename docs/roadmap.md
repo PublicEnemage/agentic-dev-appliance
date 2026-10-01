@@ -5,7 +5,7 @@ Each version turns more rules into running checks. Status per check: `docs/enfor
 ## v0.1 — baseline (this version)
 
 - Templates for all 21 artifact types, the review file and the registry entry
-- Definition of Ready floor (37 rows) and the project checklist
+- Definition of Ready floor and the project checklist
 - Seats, charters, incompatible pairs and the minimum crew (`docs/roles.yml`)
 - Checks that read files: E10 artifacts and trace, SEATS with D6 and C8, DOR, E9 caps,
   E11 registry, E3 static no-op lint
@@ -13,6 +13,15 @@ Each version turns more rules into running checks. Status per check: `docs/enfor
 - CI on every branch and a pre-push hook that works in worktrees
 
 ## v0.2 — identities, harness and data
+
+Shipped so far:
+
+- **Data discipline:** five draft data standards (schema change, contracts, quality,
+  reference and seed data, governance), floor rows D11, D12 and I8, check E14 for data
+  contracts, check E15 for append-only migrations, and an optional Data Architect seat
+  with written adoption triggers. The floor is now 40 rows.
+
+Still to come:
 
 - **E1:** one Git identity per agent seat; approvals bound to identity
 - **E5:** rulesets on every lane, admins included; trigger-coverage check
@@ -22,8 +31,6 @@ Each version turns more rules into running checks. Status per check: `docs/enfor
 - **E12:** validation environment built from CI definitions
 - **E13:** post-deploy verification: health OK, reported version matches the build shipped,
   seeded smoke test per use case in scope; output is the release evidence (P8, R2)
-- **Data discipline:** schema change policy, data contracts beyond APIs, data quality,
-  reference and seed data ownership, governance, and the trigger for a Data Architect seat
 - Second blind backtest against the WorldSIM registry
 
 ## v0.3 — the hardest checks

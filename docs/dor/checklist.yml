@@ -30,6 +30,8 @@ rows:
   D8: {status: open}
   D9: {status: open}
   D10: {status: open}
+  D11: {status: open}
+  D12: {status: open}
   # plan
   P1: {status: open}
   P2: {status: open}
@@ -47,6 +49,7 @@ rows:
   I5: {status: per-increment}
   I6: {status: per-increment}
   I7: {status: per-increment}
+  I8: {status: per-increment}
   # release
   R1: {status: open}
   R2: {status: open}

@@ -8,7 +8,7 @@ Sep 30, 2026 · @Imran
 
 ## Summary
 
-WorldSIM grew about 30 agent roles, a 52 KB constitution, a 157 KB roster and 100 near-miss entries by July 2026. The appliance proposed here runs on 2 human seats and 5 agents, with 4 phase gates above 4 increment gates and a 37-row Definition of Ready floor. Everything else becomes an optional module or a project-level rule. A blind challenger backtested the draft against WorldSIM's 100 near-misses and found only 19 caught by a named check. Twelve enforcement checks now name the missing mechanisms.
+WorldSIM grew about 30 agent roles, a 52 KB constitution, a 157 KB roster and 100 near-miss entries by July 2026. The appliance proposed here runs on 2 human seats and 5 agents, with 4 phase gates above 4 increment gates and a 40-row Definition of Ready floor. Everything else becomes an optional module or a project-level rule. A blind challenger backtested the draft against WorldSIM's 100 near-misses and found only 19 caught by a named check. Twelve enforcement checks now name the missing mechanisms.
 
 The near-miss registry changes the emphasis of the charter. The lessons the charter headlines, such as generative consultation and panel-to-root-cause matching, account for about 6 of 100 entries. Roughly half of all entries fall into three mechanical classes: tests that pass without measuring anything, parallel agent sessions corrupting each other's work, and gates that existed only on paper. These three classes are universal to agentic development and can be closed by machinery rather than by instruction. The appliance should lead with them.
 
@@ -301,6 +301,8 @@ The Definition of Ready template is the operational checklist for every phase ga
 | D8 | Design | Logic with more than three interacting conditions is specified as a decision table or state diagram, with no empty cells |
 | D9 | Design | Each test level has a purpose, tool, runner and owning seat, decided by ADR. Contract tests are required wherever two components exchange data |
 | D10 | Design | A test data standard names its owner, how fixtures are generated from the schema, the data classification rule, and how seeding is checked |
+| D11 | Design | The data standards are approved, or each is signed not-applicable: schema change policy, data contracts, data quality, reference and seed data, data governance |
+| D12 | Design | Every exchange named in the architecture's integration section has a contract file with a producer and at least one consumer |
 | P1 | Plan | Each increment from G0 to MVP names the use cases it will demonstrate |
 | P2 | Plan | Architecture, test and implementation backlogs trace to increments |
 | P3 | Plan | Branching and CI/CD approach is written, and every gate is wired and smoke-tested |
@@ -316,6 +318,7 @@ The Definition of Ready template is the operational checklist for every phase ga
 | I5 | Increment | A fresh-session reader explains the code's behaviour, failures included, without seeing the intent; the explanation matches the intent |
 | I6 | Increment | No new per-test skip without an expiry entry, no file-level or blanket skip, no drop in collected test count, and fixtures still validate against the schema |
 | I7 | Increment | Every task carries an input manifest: the artifacts a fresh session reads to do the task. No task depends on prior conversation, and a decision made in conversation counts only once written to a named artifact |
+| I8 | Increment | Every schema change in the increment is a new migration that follows the expand, migrate, contract policy. Merged migrations are never edited or deleted |
 | R1 | Release | Every increment in scope has an approved validation verdict, with no open rejection |
 | R2 | Release | Operational readiness is proven in the target environment by the automated post-deploy check (E13): health OK, reported version matches the build shipped, seeded smoke tests pass. Monitoring is live, SLOs measured, rollback rehearsed |
 | R3 | Release | Release notes and user documentation are written and approved by the Intent Owner |
@@ -454,6 +457,16 @@ The Verifier owns the test data standard. The Architect owns the schema it must 
 ### Quality metrics
 
 These join the delivery metrics and are computed the same way: collected-test count per cycle, mutation score, flaky rate, active skips past expiry (target zero), contract tests per data exchange (target full coverage), and performance against baseline at each NFR load level.
+
+## Data discipline (added in v0.2)
+
+The baseline left data to the Architect seat and a few floor rows. That covered ownership of the data layer but not how data changes, moves or is trusted. Ten WorldSIM near-misses sit in that gap: guessed field names (NM-003), a schema with no owner (NM-011), a copy path missing a required column (NM-036), events with no consumer (NM-038, NM-090), registries that disagreed with code (NM-091), a migration never applied (NM-049), mocks with wrong field names (NM-051, NM-086), and missing seed data behind a silent error (NM-060, NM-097).
+
+Five draft standards now ship in `docs/standards/data/`: schema change policy, data contracts, data quality, reference and seed data, and data governance. Each project adapts them at bootstrap. Floor row D11 requires each one approved or signed not-applicable. D12 requires a contract file for every exchange in the architecture. I8 requires every schema change to be a new migration.
+
+Two checks enforce what a machine can see. E14 refuses a contract with no consumer, a missing producer, or an incomplete schema. E15 refuses any edit, deletion or rename of a merged migration, and fails rather than skips when it cannot find the base to compare against.
+
+A Data Architect seat is chartered but not held by default. The seat check refuses any artifact that names it until a role proposal adopts it. Five written triggers say when to raise that proposal, so the question comes before the first schema mistake rather than after it.
 
 ## Elastic crew: how the team grows and shrinks
 
