@@ -517,10 +517,50 @@ Every proposal states:
 
 - the evidence: registry IDs, challenger findings or the unowned decision
 - why a rule or tool will not close the gap
-- the charter: concern, owned files, seats taken, incompatible pairs
 - the type: standing, surge with an end date, or advisory (consulted only)
 - the cost in sessions per cycle
 - the success measure and the review date
+- the job description, in front matter so a check can read it:
+  - the **trigger** that puts the seat to work
+  - the **inputs**, each with the artifact and the seat that supplies it
+  - the **value**: what the seat does with the inputs that no other seat does
+  - the **outputs**, each with the seat that consumes it and the acceptance test that
+    consumer applies
+  - the **standards and templates** it follows
+  - an independent **verifier**: a seat other than the author, the proposed seat and the
+    author's holder, with the evidence it inspects to confirm the seat follows its own
+    process
+- a **peer review**: the seats that send it input, consume its output or give up work to it
+  each recommend accept, accept with conditions or reject, and say what they would hand
+  over or take, with evidence. The group's recommendation is no more favourable than its
+  least favourable member.
+
+The peer review is how demand is shown. A seat that no peer would feed or consume has no
+demand. The Engineering Lead reads the peer recommendation before approving, and approves
+or declines for the concerns the peers cannot judge: cost, overlap and governance. Check
+E17 enforces that the job description is complete and the review independent. It does not
+judge whether either is right. That stays with the peers, the challenger and the
+Engineering Lead.
+
+### A job description is mandatory for every seat
+
+WorldSIM's convention carries over: no seat exists without a written job description.
+This covers the human seats, the Steward and optional seats, not only new proposals. Each
+seat in `docs/roles.yml` has a `job` block with the same lines a proposal states, and E17
+refuses a roster in which any seat lacks one, names a phantom seat as a sender or
+consumer, cites a standard or template that does not exist, or has a verifier on the
+seat's own holder.
+
+Two sources keep the descriptions honest. The artifact register above says who authors,
+challenges and approves each artifact, so a seat's outputs and verifier follow from it
+and cannot contradict it. A project's bootstrap challenge reviews every job description
+against the product, and a seat added later passes the peer review. When a proposal is
+approved, its charter is copied into the roles file unchanged, and E17 refuses a roster
+whose job differs from the approved charter.
+
+The core descriptions are drafts for the Intent Owner and Engineering Lead, written from
+the register and the floor. They have not been through peer review as proposals. Peers
+should challenge them the first time a project runs a crew review.
 
 ### Retirement keeps the crew honest
 

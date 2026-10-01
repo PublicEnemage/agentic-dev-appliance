@@ -36,6 +36,9 @@ session records the difference in its log and carries on.
    - fills the mission and principles in `CLAUDE.md`, marked as drafts for the Intent
      Owner to approve, and replaces the "Slots ... are filled at bootstrap" sentence
    - renames the human holder in `docs/roles.yml` to the person's name or handle
+   - reads each seat's job description in `docs/roles.yml` against the product, and edits
+     the ones the project changes. Every seat keeps one, and the check refuses a roster
+     with a seat that has none
    - narrows each seat's `qualified_layers` to what its holder can judge. **Never adds a
      qualification to make a check pass.** If no seat can judge `domain-core` or a domain
      area, it leaves the list empty and records a crew review as the first open decision
@@ -74,9 +77,10 @@ session records the difference in its log and carries on.
 
    The challenger writes its findings to `docs/bootstrap.review.md`, using the review
    template and its severity scale, and commits it to the `bootstrap` branch. The
-   bootstrap has no artifact id, so this file is exempt from the review template's naming. It reviews
-   against the constitution, `docs/roles.yml`, `appliance.yml`, the data standards and
-   this file. It does not judge the draft standards' clauses in detail; their own
+   bootstrap has no artifact id, so this file is exempt from the review template's naming.
+   It reviews against the constitution, `docs/roles.yml` (including each seat's job
+   description, checked for gaps against the product), `appliance.yml`, the data
+   standards and this file. It does not judge the draft standards' clauses in detail; their own
    challenge comes before the design gate.
 
    A fresh session holding the **Architect** seat then answers each finding in the Answer
@@ -110,6 +114,8 @@ session records the difference in its log and carries on.
      commit the edit, then run `python3 tools/checks/check_migrations.py --base <the
      migration's commit>`. An uncommitted edit passes by design (E15)
    - an architecture artifact in review with no data-model diagram (E16)
+   - a role proposal in review whose verifier is its author, and a seat in
+     `docs/roles.yml` with its job description removed (E17)
    - the pre-push hook, run directly, with one breaking change committed, such as a
      deleted floor row. The hook stops at its first failing command, so the tests do not
      run in the refused case

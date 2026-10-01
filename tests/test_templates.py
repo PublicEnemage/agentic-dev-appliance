@@ -46,3 +46,11 @@ def test_template_carries_valid_starter_diagrams(template):
     meta, body = read_front_matter(template)
     required = types_cfg["required_diagrams"].get(meta["type"], [])
     assert diagram_problems(body, required, {}, types_cfg) == []
+
+
+def test_role_proposal_template_teaches_the_job_description():
+    """The template's front matter carries every charter line the crew check reads."""
+    meta, _ = read_front_matter(REPO / "docs/templates/role-proposal.md")
+    assert set(meta["charter"]) == {"trigger", "inputs", "value", "outputs", "standards", "templates", "verifier"}
+    assert set(meta["charter"]["verifier"]) == {"seat", "evidence"}
+    assert {"proposed_seat", "peer_review", "peer_recommendation"} <= set(meta)

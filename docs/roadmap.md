@@ -34,6 +34,13 @@ Shipped so far:
   not-applicable row shape, says the files on disk win over injected context, and the
   smoke items are runnable from their text. Report: `docs/method/dryrun-2.md`.
 
+- **Crew proposals (E17):** a role proposal states a trigger, inputs and senders, value,
+  outputs and consumers, standards and templates, and an independent verifier with
+  evidence. Peers recommend on demand, and the Engineering Lead approves with that
+  endorsement. Every seat in `docs/roles.yml`, human or agent, core or optional, carries
+  the same job description, and the check refuses a roster without them. The core
+  descriptions are drafts written from the artifact register. Open: peer review of them.
+
 Still to come:
 
 - **Bootstrap-complete check:** the untouched template passes every check with all slots
