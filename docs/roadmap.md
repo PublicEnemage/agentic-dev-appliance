@@ -41,8 +41,23 @@ Shipped so far:
   the same job description, and the check refuses a roster without them. The core
   descriptions are drafts written from the artifact register. Open: peer review of them.
 
+- **Agency and exceptions (design):** design rule 10 (prescribe outcomes and gates, let the
+  job description carry judgment) and a constitution line. The exception mechanism is
+  designed in `docs/method/exceptions.md`: a time-boxed, capped, priced artifact, with
+  expiry that fails the build, one renewal, repeat detection, a live budget and a short
+  non-waivable list. Build follows dry run 3.
+
 Still to come:
 
+- **Build licence (design):** a renewable, computed approval to build, renewed by a
+  conformance review that measures code, features and standards against what was approved.
+  Design in `docs/method/build-licence.md`. First review run by hand in the pilot; build
+  the checks from what it finds.
+- **Exceptions (E18):** the artifact type, template and check, then the runner's waiver
+  matching. Design in `docs/method/exceptions.md`.
+- **Registry check target:** E11 refuses "none" or "TBD" as a countermeasure but accepts any
+  other text, so a prompt tweak passes. The Check field should name an existing check or
+  repository path.
 - **Bootstrap-complete check:** the untouched template passes every check with all slots
   unfilled, so nothing catches a missed bootstrap edit. A flag in `appliance.yml` would let
   a check refuse unfilled slots once bootstrap is declared done.
