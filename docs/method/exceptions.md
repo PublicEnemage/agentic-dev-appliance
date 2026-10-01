@@ -43,6 +43,43 @@ Front matter, so a check can read it:
 
 The review file beside it answers the risk analysis item by item, like any other artifact.
 
+## An exception is also a diagnosis
+
+In WorldSIM, taking an exception for a failing test to the Intent Owner showed that the
+design of the feature was wrong. The failure looked like an engineering problem, and the
+cause sat upstream in intent. This is the same pattern as NM-018: the surface domain of a
+problem is not always its root-cause domain. A request to waive a rule is often the first
+moment anyone has asked whether the rule is right, so the process should use it as a
+signal, and not only as a gate.
+
+Two more fields carry that:
+
+| Field | Meaning |
+| --- | --- |
+| `diagnosis` | The author's first reading of why the rule fails: `implementation`, `rule-wrong`, `design-wrong`, `environment` or `schedule` |
+| `consulted` | Seats asked cold before the Engineering Lead decides, each with a reference to the recorded input |
+
+Two rules follow.
+
+1. **Consult by root cause, not surface.** The consulted seats are chosen by the suspected
+   cause, as for any artifact. When the waived item traces, through its parents, to a use
+   case, a non-functional requirement or the business case, the Intent Owner is consulted
+   and the input is recorded before the Engineering Lead decides. The Intent Owner advises;
+   the Engineering Lead still approves.
+2. **A design finding withdraws the exception.** If the consulted input shows the design is
+   wrong, the exception is withdrawn and the upstream artifact goes back through the chain.
+   That is the consumer duty working, and it costs less than carrying a waiver.
+
+The Steward reports the spread of diagnoses each cycle. Many `design-wrong` points to weak
+discovery. Many `schedule` points to a plan that is wrong. Many `rule-wrong` on one rule is
+the repeat signal in defence 3.
+
+The cost is bounded. Only exceptions that trace to intent reach the Intent Owner, so the
+human is not asked to triage style or tooling waivers. The trace assumes the waived item
+names the artifact it traces to, for example the story or use case id a test belongs to.
+Where that link is missing, the check cannot tell whether the Intent Owner is needed, and
+refuses the exception until the author supplies it.
+
 ## What keeps the register from becoming a loophole
 
 Each defence is a check or a measurable, so it does not depend on anyone being careful.
@@ -74,7 +111,8 @@ A waiver works only if a check's finding can be matched to an exception. Checks 
 report a check ID, a path and a message. The runner would drop a finding that an active,
 approved exception covers, and print it as waived. The register is then checked by its
 own check, E18: front matter complete, the cap and renewal rules met, the non-waivable
-list respected, authors, challengers and approvers distinct, and the exit named.
+list respected, authors, challengers and approvers distinct, the exit named, a diagnosis
+given, and the Intent Owner consulted whenever the waived item traces to intent.
 
 ## Parameters to settle
 
@@ -92,8 +130,9 @@ Engineering Lead should replace them with what WorldSIM's own register shows.
 
 ## Open questions
 
-- Whether the Intent Owner must also approve an exception that lowers a security, privacy
-  or data-protection control, as opposed to a process or style rule.
+- Whether the Intent Owner's input should be advice only, as written above, or an approval
+  for exceptions that lower a security, privacy or data-protection control. Those trace to
+  non-functional requirements, so the consultation rule already reaches them.
 - Whether an exception needs a peer review like a role proposal, or only the challenger.
   The first costs more and would catch more.
 - How the single-principal disclosure applies: with one person in both human seats, the
