@@ -47,8 +47,16 @@ Shipped so far:
   expiry that fails the build, one renewal, repeat detection, a live budget and a short
   non-waivable list. Build follows dry run 3.
 
+- **Dry run 3 (seat job reviews):** run and recorded in `docs/method/dryrun-3.md`. All
+  eight seats proposed changes. Six of eight sessions were not independent (git, not
+  context). Peers found 18 of 30 wiring mismatches a script finds. No change to
+  `docs/roles.yml` yet: the Engineering Lead decides which of the proposals apply.
+
 Still to come:
 
+- **Wiring reconciliation and review independence (next build):** both a pair-level and a
+  name-level test, with the rule pinned, and a check that a review branch holds no other
+  seat's review in its ancestry. Authority and help blocks and the seat library follow.
 - **Build licence (design):** a renewable, computed approval to build, renewed by a
   conformance review that measures code, features and standards against what was approved.
   Design in `docs/method/build-licence.md`. First review run by hand in the pilot; build
