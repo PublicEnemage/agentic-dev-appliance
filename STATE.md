@@ -26,8 +26,10 @@ Bootstrap copies the human's description of the product here, as given.
 
 ## Open decisions
 
-- Dry run 3 is recorded in `docs/method/dryrun-3.md`. The Engineering Lead decides which
-  proposed job description changes apply. Nothing in `docs/roles.yml` has changed.
+- Dry run 3 is recorded in `docs/method/dryrun-3.md`. Seven design questions are decided in
+  `docs/method/dryrun-3-decisions.md`. Not yet applied: nothing in `docs/roles.yml` has
+  changed. The Frontend Architect needs a role proposal with peer review. The two
+  `incompatible_pairs` and the smaller questions are not decided.
 
 ## Left mid-task
 

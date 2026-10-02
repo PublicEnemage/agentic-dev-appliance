@@ -52,8 +52,15 @@ Shipped so far:
   context). Peers found 18 of 30 wiring mismatches a script finds. No change to
   `docs/roles.yml` yet: the Engineering Lead decides which of the proposals apply.
 
+- **Dry run 3 decisions:** seven design questions decided in
+  `docs/method/dryrun-3-decisions.md`, including a Frontend Architect seat split from the
+  Architect. Decided, not yet applied to `docs/roles.yml`.
+
 Still to come:
 
+- **Apply the decisions:** Frontend Architect role proposal with peer review, wiring changes
+  to existing seats, Data Architect adoption, and one constitution line for a blocked human
+  seat.
 - **Wiring reconciliation and review independence (next build):** both a pair-level and a
   name-level test, with the rule pinned, and a check that a review branch holds no other
   seat's review in its ancestry. Authority and help blocks and the seat library follow.
