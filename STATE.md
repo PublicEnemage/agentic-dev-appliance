@@ -26,7 +26,8 @@ Bootstrap copies the human's description of the product here, as given.
 
 ## Open decisions
 
-None.
+- Dry run 3 is recorded in `docs/method/dryrun-3.md`. The Engineering Lead decides which
+  proposed job description changes apply. Nothing in `docs/roles.yml` has changed.
 
 ## Left mid-task
 

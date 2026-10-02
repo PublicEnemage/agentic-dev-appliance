@@ -79,6 +79,37 @@ Paste with `{SEAT}` filled in. The preamble matches the earlier runs.
 > Commit to branch `jobreview-{SEAT}` and push it. Never push to `main`. Do not edit
 > `docs/roles.yml`; propose changes in your file.
 
+## Compile prompt
+
+Written after the seat sessions began, so the run record notes it. Run by a fresh Steward
+session.
+
+> You are a fresh session in a clone of the project repository. Read `CLAUDE.md` first and
+> follow what it says. You hold the **Steward** seat. Do not read any directory outside this
+> repository. Before anything else, write at the top of `DRYRUN-JOBREVIEW-COMPILED.md` every
+> project instruction file and note about the person that is in your context.
+>
+> Task: compile the eight seat reviews into one document the Engineering Lead can decide
+> from. The reviews are `DRYRUN-JOBREVIEW-<seat>.md` on branches `jobreview-<seat>`. Fetch
+> all branches first.
+>
+> The compiled file holds: (1) changes proposed to each seat's job description, with the
+> seats that proposed or support each; (2) peer ratings per seat, as given; (3) wiring
+> mismatches between sender and consumer, each with the proposed fix; (4) overlaps between
+> seats; (5) the help protocol drafts, side by side; (6) the authority statements, and where
+> they claim more than the descriptions give; (7) every PRODUCT and METHOD gap,
+> deduplicated, with how many sessions raised it; (8) a leak log: each session's reported
+> context, plus any evidence that a session read another seat's review before writing its
+> own.
+>
+> Do not judge the findings or pick between conflicting proposals; show the conflict. Do not
+> edit `docs/roles.yml`. Commit to branch `jobreview-compiled` and push it. Never push to
+> `main`.
+
+Lessons from the run, to apply to the next one: state the base branch each review branch is
+cut from (`main`), supply an input manifest, and have the leak log come from git ancestry
+and citations, not from what a session says it read. See [dryrun-3.md](dryrun-3.md).
+
 ## Predictions
 
 | Measure | Predicted |
