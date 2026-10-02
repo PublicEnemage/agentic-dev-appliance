@@ -127,6 +127,10 @@ not taken from the sessions:
 
 ## Left open
 
+Seven of the design questions raised by the sessions are now decided. See
+[dryrun-3-decisions.md](dryrun-3-decisions.md). The text here is as written on the day of the
+run.
+
 - The Engineering Lead has not decided which changes apply. The plan's steps 4 and 5 are not
   done, and no change to `docs/roles.yml` is made here.
 - Decisions the sessions raised that the file cannot settle: who authors the frontend
