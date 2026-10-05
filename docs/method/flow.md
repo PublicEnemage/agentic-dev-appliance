@@ -1,7 +1,7 @@
 # Flow management: GitHub-native
 
-**Status:** decided 2026-10-05 by the Engineering Lead. Design only. None of the checks
-below exist yet.
+**Status:** decided 2026-10-05 by the Engineering Lead. The escalation path is built
+(`escalation.md`). The other checks below are designed and not built.
 
 ## Decision
 
@@ -36,7 +36,7 @@ The repo stays the record for approvals, statuses and test evidence. Design rule
 | Report the result | PR description in a fixed shape, plus a comment on the issue | Done, evidence links, what is left, questions. A squash merge copies the PR text into git history |
 | See the work | Projects board with fields Seat, Track, Status, Cycle, Size | Columns Ready, In progress, In review, Blocked, Validated. Done means validated, not closed. Actions move the cards from events and nobody drags them |
 | Cap WIP | Board view by Track | The cap is `track_cap` in `appliance.yml` |
-| Escalate | Issue form with label `needs-human`, or `needs-intent-owner` | Fields: seat, artifact, decision needed, options with a recommendation, work parked, consequence of delay |
+| Escalate | Issue form with label `needs-human` and a Decider field | Built. See [escalation.md](escalation.md). Fields: decider, trigger, seat, artifact, decision, options with a recommendation, work parked, consequence of delay |
 | Approve | CODEOWNERS and a branch ruleset | A human merge approves. Check E1 will bind the identity |
 | Release | Environment with a required reviewer | The release decision. The post-deploy check (E13) runs as an Actions job |
 | Measure | Actions job over git, issue and PR timestamps | Delivery owns the metrics and the Steward recomputes them |
@@ -51,8 +51,8 @@ The repo stays the record for approvals, statuses and test evidence. Design rule
 - **Escalations.** Issues with the `needs-human` label. Triggers: a second rejection of an
   artifact, a gap no seat can judge, an exception request, a blocked item past its limit,
   and the validation and release gates.
-- **One inbox view** shows both for the Engineering Lead. The Intent Owner gets a separate
-  label and view, so the queue splits when a second person exists.
+- **One inbox** (`python tools/escalations.py inbox`) shows both. The Decider field splits
+  the queue between the Engineering Lead and the Intent Owner when a second person exists.
 - **While a human is unreachable**, sessions park the work and record it in `STATE.md`.
   Agents never approve for a human (decision 7).
 
@@ -63,8 +63,8 @@ Names, not ids. Ids are assigned when each is built.
 1. **Task intake.** A PR references an issue whose form fields are filled in and whose
    manifest paths exist.
 2. **Summary shape.** The PR description has the four parts.
-3. **Escalation aging.** A scheduled job flags items past their limit, the way E11 opens
-   issues for failing jobs.
+3. **Escalation aging.** Built as E19 and `tools/escalations.py`. See
+   [escalation.md](escalation.md).
 4. **Board sync.** Actions set Status from events and refuse a hand-moved card.
 5. **Metrics.** A script computes the delivery metrics from git and GitHub timestamps.
 6. **Chain walk.** Every PR traces to the business case through approved artifacts.

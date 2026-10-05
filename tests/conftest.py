@@ -16,6 +16,7 @@ import yaml
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "tools" / "checks"))
+sys.path.insert(0, str(REPO / "tools"))
 
 FIXTURES = REPO / "tests" / "fixtures" / "defaults"
 
@@ -24,6 +25,8 @@ APPLIANCE_FILES = [
     "docs/artifact-types.yml",
     "docs/enforcement.yml",
     "docs/dor/floor.yml",
+    ".github/ISSUE_TEMPLATE/escalation.yml",
+    ".github/workflows/escalation-aging.yml",
 ]
 
 # Files each project edits at bootstrap. Tests use fixed defaults instead, so a project's

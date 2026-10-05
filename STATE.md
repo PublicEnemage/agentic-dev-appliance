@@ -32,8 +32,9 @@ Bootstrap copies the human's description of the product here, as given.
   and the sequence is in `docs/method/dryrun-3-apply.md`. The two
   `incompatible_pairs` and the smaller questions are not decided.
 
-- Flow management is decided as GitHub-native in `docs/method/flow.md`. Open: the pilot
-  repository's plan, who authors task issues, and milestone or iteration for a cycle.
+- Flow management is decided as GitHub-native in `docs/method/flow.md`. The escalation path
+  is built (`docs/method/escalation.md`, check E19). Open: the pilot repository's plan, who
+  authors task issues, milestone or iteration for a cycle, and the escalation closure check.
 
 ## Left mid-task
 

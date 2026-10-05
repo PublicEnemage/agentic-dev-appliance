@@ -14,6 +14,7 @@ import check_contracts
 import check_crew
 import check_diagrams
 import check_dor
+import check_escalation
 import check_migrations
 import check_registry
 import check_seats
@@ -36,6 +37,7 @@ def main(argv: list[str]) -> int:
         check_migrations.check(root, base).emit("E15 migrations"),
         check_diagrams.check(root).emit("E16 diagrams"),
         check_crew.check(root).emit("E17 crew proposals"),
+        check_escalation.check(root).emit("E19 escalation"),
     ]
     failed = sum(results)
     print(f"\n{len(results) - failed}/{len(results)} checks passed")

@@ -22,3 +22,9 @@ caps:
 data:
   contracts_dir: contracts        # one YAML file per exchange (STD-002, check E14)
   migrations_dir: migrations      # append-only migrations (STD-001, check E15)
+
+# Escalations to a human seat (docs/method/escalation.md). Days are calendar days.
+# The defaults suit the standard grade. light: 7 and 14. assured: 1 and 3.
+escalation:
+  respond_within_days: 3      # past this the issue is flagged overdue
+  stalled_after_days: 7       # past this it is flagged stalled and the Steward counts it

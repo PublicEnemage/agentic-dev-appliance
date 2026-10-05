@@ -57,8 +57,9 @@ Shipped so far:
   Architect. Decided, not yet applied to `docs/roles.yml`.
 
 - **Flow management (design):** GitHub-native dispatch, tracking, board and queues,
-  with platform lock-in accepted. Design in `docs/method/flow.md`. Pilot build: task
-  intake check, summary shape check and escalation aging first.
+  with platform lock-in accepted. Design in `docs/method/flow.md`. Built: the escalation path (form, aging job,
+  inbox, check E19), in `docs/method/escalation.md`. Next for the pilot: task intake check
+  and summary shape check.
 
 Still to come:
 
