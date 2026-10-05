@@ -36,7 +36,7 @@ PROJECT_DEFAULTS = {
     "CLAUDE.md": "CLAUDE.md",
     "STATE.md": "STATE.md",
     "docs/roles.yml": "roles.yml",
-    "docs/registry.md": "registry.md",
+    "docs/near-miss-registry.md": "near-miss-registry.md",
     "docs/skips.yml": "skips.yml",
 }
 

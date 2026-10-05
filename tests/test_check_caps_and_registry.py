@@ -15,7 +15,7 @@ ENTRY = """
 
 
 def add_entries(repo, *entries):
-    path = repo.root / "docs/registry.md"
+    path = repo.root / "docs/near-miss-registry.md"
     path.write_text(path.read_text() + "".join(entries))
 
 
@@ -78,5 +78,5 @@ def test_refuses_unknown_registry_type(repo):
 
 def test_template_development_registry_is_well_formed():
     from conftest import REPO
-    report = check_registry.check(REPO, "docs/method/registry.md")
+    report = check_registry.check(REPO, "docs/method/template-near-miss-registry.md")
     assert report.ok, messages(report)

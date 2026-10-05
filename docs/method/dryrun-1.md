@@ -35,7 +35,7 @@ the branch holding them.
 
 | Finding | Severity | Disposition |
 | --- | --- | --- |
-| Tests run by the pre-push hook committed into the real repository and broke the clone (RG-001) | high | Fixed: git variables cleared in checks, tests and hook; test seen to fail without the fix; registry entry RG-001 in [registry.md](registry.md) |
+| Tests run by the pre-push hook committed into the real repository and broke the clone (RG-001) | high | Fixed: git variables cleared in checks, tests and hook; test seen to fail without the fix; registry entry RG-001 in [template-near-miss-registry.md](template-near-miss-registry.md) |
 | The template's tests read the project's own roles and settings, so honest bootstrap choices broke them, which biased the choices (Q11) | high | Fixed: tests use fixed defaults in `tests/fixtures/defaults/`; the checklist is generated from the floor |
 | A domain qualification was declared to make check C8 pass, and domain-core went to seats without domain knowledge | high | Judgment rule added to the constitution and roles file: never declare a qualification to pass a check. Binding declarations to evidence waits for E1 |
 | The light grade was chosen for a product with real users' data, against the method's own grade table | high | Default is now standard; appliance.yml says when light applies, and that the business case confirms the grade |

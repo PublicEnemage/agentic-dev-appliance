@@ -138,7 +138,7 @@ These four gates run inside each increment. Four phase gates sit above them (cas
 | Definition of Ready | `docs/dor.yml` | Floor rows pinned by version; project rows only finer |
 | Standards | `docs/standards/` | Input contracts owned by the consuming seat; craft standards by the producing seat |
 | Artifact chain | `docs/case/`, `docs/design/`, `docs/plan/`, `docs/intents/`, `docs/adr/` | Front matter with ID, seats, status and parents; a review file beside each artifact |
-| Registry | `docs/registry.md` | Append only; Type = near-miss or external |
+| Near-miss registry | `docs/near-miss-registry.md` | Append only; Type = near-miss or external |
 | State | `STATE.md` | Size-capped; rewritten each session; archived each cycle |
 
 ### Deliberately left out of the core

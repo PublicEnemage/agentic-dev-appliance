@@ -140,6 +140,16 @@ checks:
       scheduled, runs tools/escalations.py aging and can write issues. A merged pull
       request must close each answered escalation with the decision in a repository file;
       that check is not built yet. See docs/method/escalation.md.
+  E20:
+    name: A file name says what the file is for
+    where: pre-push, CI
+    status: implemented
+    implemented: tools/checks/check_file_names.py
+    note: >
+      Refuses a generic name (registry, notes, misc, temp, final, draft, data and the like)
+      for a .md, .yml, .yaml or .txt file in the root, docs/ or .github/, including the
+      slug of a numbered name. Whether a name is the briefest unambiguous one is left to
+      the author and the challenger.
   DOR:
     name: Definition of Ready floor completeness, finer never coarser, no blank rows
     where: CI

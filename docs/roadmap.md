@@ -61,6 +61,11 @@ Shipped so far:
   inbox, check E19), in `docs/method/escalation.md`. Next for the pilot: task intake check
   and summary shape check.
 
+- **Near-miss registry and file names:** the registry is `docs/near-miss-registry.md` and the
+  template's own is `docs/method/template-near-miss-registry.md` (RG-001 to RG-008). Check E20
+  refuses generic file names. Open: `docs/roles.yml`, `docs/skips.yml` and
+  `docs/templates/registry-entry.md` keep their names until a change is proposed.
+
 Still to come:
 
 - **Apply the decisions:** Frontend Architect role proposal (`RP-001`, drafted) with peer

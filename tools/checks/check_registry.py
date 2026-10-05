@@ -1,6 +1,6 @@
 """E11: registry integrity.
 
-The registry (docs/registry.md) is append-only institutional memory. Refuses when:
+The near-miss registry (docs/near-miss-registry.md) is append-only institutional memory. Refuses when:
 - code fences are unbalanced, so later entries would render as code
 - an entry heading is malformed, or IDs are not unique and ascending without gaps
 - an entry misses a required field, or its Type is not near-miss or external
@@ -26,7 +26,7 @@ from pathlib import Path
 
 from lib import Report, root_from_argv
 
-REGISTRY = "docs/registry.md"
+REGISTRY = "docs/near-miss-registry.md"
 HEADING = re.compile(r"^## (?P<id>RG-(?P<n>\d{3})) — \S")
 FIELDS = ["Type", "Date", "What happened", "What was at risk", "What caught it", "Countermeasure", "Check"]
 TYPES = {"near-miss", "external"}

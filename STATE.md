@@ -36,6 +36,10 @@ Bootstrap copies the human's description of the product here, as given.
   is built (`docs/method/escalation.md`, check E19). Open: the pilot repository's plan, who
   authors task issues, milestone or iteration for a cycle, and the escalation closure check.
 
+- Near-miss registry renamed and file-name rule added (E20). Open: whether external issues
+  get their own file, and renaming `docs/roles.yml`, `docs/skips.yml` and
+  `docs/templates/registry-entry.md` (the last needs a proposal for the Steward's job).
+
 ## Left mid-task
 
 None.
