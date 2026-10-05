@@ -29,8 +29,10 @@ peer_recommendation: accept
 
 # {{Proposed role}}
 
-Any seat or the Steward may author. Another seat challenges on the role, rule or tool test.
-The Engineering Lead approves, and reads the peer review first.
+Any agent seat may author, but not one the charter names as sender or consumer, because the
+author cannot be a peer. The Steward compiles and holds no artifact seat (SEATS). Another
+seat challenges on the role, rule or tool test. The Engineering Lead approves, and reads the
+peer review first.
 
 The front matter is the job description. The check E17 reads it, so keep each value to
 what the seat actually does. A seat that cannot fill a line has not yet been defined.
