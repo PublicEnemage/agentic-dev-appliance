@@ -121,7 +121,9 @@ checks:
       trigger, inputs and senders, value, outputs and consumers, standards, templates, and
       a verifier on another holder with evidence. A role proposal in review or approved
       states the same, and an approved charter must match the roster unchanged. A change to
-      an existing seat is a proposal with change_of set, and takes the same peer review.
+      an existing seat is a proposal with change_of and change_kind set. A substantive
+      change takes the full peer review. A wiring-only change takes one peer and the seat on
+      the other end of each changed line.
       Its peer review needs two or more independent peers, including every agent seat that
       sends it input or consumes its output, each with a recommendation, a demand
       statement and evidence. Checks completeness and independence. Whether the job

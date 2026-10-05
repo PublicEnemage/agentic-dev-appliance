@@ -19,11 +19,15 @@ Refuses when:
 - a proposal is approved while the peer group recommends rejection, or without a matching
   job description in docs/roles.yml
 - a proposal names an existing core seat without `change_of`, or `change_of` names a seat
-  that does not exist or differs from `proposed_seat`
+  that does not exist or differs from `proposed_seat`, has no valid `change_kind`, or is
+  declared wiring-only while the charter changes anything but inputs and outputs
 
 A change to an existing seat's job description is a proposal with `change_of` set to that
-seat and its full new charter. It takes the same peer review as a new seat. When a later
-change is approved, mark the earlier proposal for that seat superseded.
+seat, `change_kind` and its full new charter. Every change takes a peer review. A
+substantive change takes the same review as a new seat. A wiring-only change (inputs and
+outputs only, checked against the roster in review) takes one peer, and the seat on the
+other end of every added, removed or changed line. When a later change is approved, mark
+the earlier proposal for that seat superseded.
 
 The check sees completeness and independence. Whether a job description is sound, and
 whether evidence is real, is for the peers, the challenger and the Engineering Lead.
@@ -39,6 +43,7 @@ from check_seats import holder_index
 
 RANK = {"reject": 0, "accept-with-conditions": 1, "accept": 2}
 ROSTER = "docs/roles.yml"
+CHANGE_KINDS = {"substantive", "wiring"}
 
 
 def blank(v) -> bool:
@@ -118,6 +123,21 @@ def job_problems(job, *, label: str, subject: str | None, seats: dict, held_by: 
     return out, senders, consumers
 
 
+def moved_counterparts(old: dict, new: dict) -> set[str]:
+    """Seats on the other end of every input or output line that is added, removed or
+    changed between two job descriptions."""
+    out: set[str] = set()
+    for key, end in (("inputs", "from"), ("outputs", "for")):
+        def lines(job):
+            return {tuple(sorted((k, str(v)) for k, v in item.items()))
+                    for item in (job.get(key) or []) if isinstance(item, dict)}
+        for line in lines(old) ^ lines(new):
+            seat = dict(line).get(end)
+            if seat:
+                out.add(seat)
+    return out
+
+
 def check(root: Path) -> Report:
     report = Report()
     cfg = load_config(root)
@@ -160,6 +180,27 @@ def check(root: Path) -> Report:
         elif proposed in base_seats and a.status == "in-review":
             bad(f"proposed seat '{proposed}' already exists; to change its job description set change_of: {proposed} and state the full new charter")
 
+        # A change takes a peer review in both tiers. A wiring-only change (inputs and
+        # outputs only) needs one peer, and the seat on the other end of every changed line.
+        need = 2
+        counterparts: set[str] | None = None
+        if not blank(change_of) and change_of in seats:
+            kind_of_change = m.get("change_kind")
+            if kind_of_change not in CHANGE_KINDS:
+                bad(f"change_kind must be one of {sorted(CHANGE_KINDS)}")
+            elif kind_of_change == "wiring":
+                need = 1
+                counterparts = set()
+                if a.status == "in-review":
+                    old_job = (seats.get(change_of) or {}).get("job") or {}
+                    new_job = m.get("charter") if isinstance(m.get("charter"), dict) else {}
+                    moved = {k for k in set(old_job) | set(new_job) if old_job.get(k) != new_job.get(k)}
+                    if not moved:
+                        bad("declared wiring-only but the charter equals the current job description")
+                    elif moved - {"inputs", "outputs"}:
+                        bad("declared wiring-only but the charter also changes " + ", ".join(sorted(moved - {"inputs", "outputs"})))
+                    counterparts = moved_counterparts(old_job, new_job)
+
         charter = m.get("charter")
         problems, senders, consumers = job_problems(charter, label="charter", subject=proposed,
                                                     seats=seats, held_by=held_by, root=root, author=author)
@@ -196,9 +237,9 @@ def check(root: Path) -> Report:
                 ranks.append(RANK[rec])
             if blank(p.get("demand")) or blank(p.get("evidence")):
                 bad(f"peer_review #{i}: needs 'demand' (what this seat would hand over or take) and 'evidence'")
-        if len(seen) < 2:
-            bad("peer_review needs at least two distinct peers")
-        for s in sorted(senders | consumers):
+        if len(seen) < need:
+            bad("peer_review needs at least two distinct peers" if need == 2 else "peer_review needs at least one peer")
+        for s in sorted(senders | consumers if counterparts is None else counterparts):
             if kind(s) == "agent" and s != proposed and s not in seen:
                 bad(f"seat '{s}' sends input to or consumes output from the proposed seat but gave no peer review")
 

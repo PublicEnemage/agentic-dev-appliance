@@ -565,18 +565,23 @@ should challenge them the first time a project runs a crew review.
 
 ### Changing an existing seat
 
-A new seat and a change to an existing seat's job description take the same road: a role
-proposal with a peer review. A change sets `change_of` to the seat and states the full new
-charter, and E17 applies the same peer rules. When a later change is approved, the earlier
-proposal for that seat is marked superseded, or E17 refuses the roster as drifted.
+Every change to a job description takes a peer review before merge, the way every code
+change does. A new seat and a change to an existing seat take the same road: a role
+proposal. A change sets `change_of` to the seat, sets `change_kind` and states the full new
+charter. When a later change is approved, the earlier proposal for that seat is marked
+superseded, or E17 refuses the roster as drifted.
 
-Two tiers keep this from becoming a toll on every edit. A **substantive** change (trigger,
-value, verifier, qualified layers, incompatible pairs, holders) needs a proposal. A
-**wiring-only** change (adding, renaming or removing inputs and outputs) needs none once the
-reconciliation check proves each change is matched on the other seat. Until that check
-exists, wiring changes ride in one reviewed pull request with a change table, and the
-Engineering Lead's merge approves them. E17 does not yet tell the two tiers apart: a
-substantive change with no proposal is caught by review, not by the check.
+Two kinds keep the review proportionate. A **substantive** change (trigger, value,
+verifier, standards, templates, qualified layers, incompatible pairs, holders) takes the
+full review a new seat takes. A **wiring-only** change (inputs and outputs only) takes one
+peer, and the seat on the other end of every added, removed or changed line. In review,
+E17 compares the charter to the roster and refuses a change declared wiring-only that
+moves anything else. Qualified layers, pairs and holders live outside the `job` block, so
+E17 cannot see them. A change to them is declared substantive and its peers judge it.
+
+The reconciliation check, when it ships, proves each wiring line is matched on the other
+seat. It does not replace the counterpart's review. Approvals are declared in front matter,
+so a proposal moved straight to approved skips the diff. Review catches that for now.
 
 ### Retirement keeps the crew honest
 
