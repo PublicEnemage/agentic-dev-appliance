@@ -26,6 +26,7 @@ APPLIANCE_FILES = [
     "docs/enforcement.yml",
     "docs/dor/floor.yml",
     ".github/ISSUE_TEMPLATE/escalation.yml",
+    ".github/ISSUE_TEMPLATE/backlog-item.yml",
     ".github/workflows/escalation-aging.yml",
 ]
 
@@ -37,6 +38,7 @@ PROJECT_DEFAULTS = {
     "STATE.md": "STATE.md",
     "docs/roles.yml": "roles.yml",
     "docs/near-miss-registry.md": "near-miss-registry.md",
+    "docs/known-issues-registry.md": "known-issues-registry.md",
     "docs/skips.yml": "skips.yml",
 }
 

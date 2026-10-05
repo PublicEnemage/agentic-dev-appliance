@@ -20,13 +20,14 @@ it. A rule without a running check is a suggestion, so the status of every check
 | SEATS | Author, challenger and approver on different seats and holders; D6 layer charters; C8 domains | Implemented (declared seats) |
 | DOR | Definition of Ready floor: complete, finer never coarser, no blank rows, gate checks | Implemented |
 | E9 | Constitution size, state file size, track cap, single-principal disclosure | Partial |
-| E11 | Registry integrity | Partial |
+| E11 | Integrity of the near-miss and known issues registries | Partial |
 | E3 | No-op test lint: early return, catch-to-false, blanket and unregistered skips | Partial (static) |
 | E14 | Data contracts: producer, consumers, kind, version, compatibility, schema | Implemented |
 | E15 | Append-only migrations: no edit, delete or rename of a merged migration | Implemented |
 | E16 | Required diagrams as Mermaid code: present, right form, not empty | Implemented |
 | E17 | Every seat has a job description; role proposals add an independent verifier and a peer review with demand | Implemented |
 | E20 | A file name says what the file is for; generic names are refused | Implemented |
+| E21 | The backlog intake form exists and requires outcome and acceptance | Implemented |
 | E1, E4, E5, E7, E8, E12, E13 | Identities, contracts, rulesets, harness hooks, manifests, validation env, post-deploy verification | v0.2 |
 | E2, E6 | Red record per test, gate canary | v0.3 |
 
@@ -51,7 +52,8 @@ docs/dor/                 Definition of Ready floor and this project's checklist
 docs/enforcement.yml      every check and its status
 docs/templates/           templates for every artifact type
 docs/standards/data/      data standards (draft defaults to adapt) and the Data Architect trigger
-docs/near-miss-registry.md  near-misses and external issues
+docs/near-miss-registry.md  hazards we can design away, each with a check
+docs/known-issues-registry.md  limitations we cannot solve, with workarounds
 docs/method/              design rationale, challenge record, backtest, dry runs, the template's own near-misses
 tools/checks/             the checks
 tests/                    tests showing each check refusing what it should

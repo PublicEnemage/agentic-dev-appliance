@@ -1,0 +1,47 @@
+name: Backlog item
+description: A piece of work that needs attention, filed so it is tracked. One outcome per issue.
+title: "[backlog] "
+labels: ["backlog"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        File work that needs doing and is not being done now. State the outcome and how it will
+        be accepted, so the seat that picks it up needs no further questions. The work happens
+        on a branch and a pull request that closes this issue. See docs/method/backlog.md.
+  - type: input
+    id: seat
+    attributes:
+      label: Seat
+      description: The seat that should do it, as named in docs/roles.yml. Write "unassigned" if not yet known.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      description: What is true when this is done. One outcome, stated as a result and not as steps.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance
+      description: A checklist a reviewer can tick from the repository. Name the check or test where one decides it.
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs
+      description: Repository paths the seat should read. Write "none" if there are none.
+    validations:
+      required: true
+  - type: input
+    id: parent
+    attributes:
+      label: Parent
+      description: The artifact id, issue or decision record this traces to. Write "none" if it stands alone.
+    validations:
+      required: true

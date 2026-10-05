@@ -36,6 +36,7 @@ The repo stays the record for approvals, statuses and test evidence. Design rule
 | Report the result | PR description in a fixed shape, plus a comment on the issue | Done, evidence links, what is left, questions. A squash merge copies the PR text into git history |
 | See the work | Projects board with fields Seat, Track, Status, Cycle, Size | Columns Ready, In progress, In review, Blocked, Validated. Done means validated, not closed. Actions move the cards from events and nobody drags them |
 | Cap WIP | Board view by Track | The cap is `track_cap` in `appliance.yml` |
+| Backlog | Issue form with label `backlog` | Built. See [backlog.md](backlog.md). Fields: seat, outcome, acceptance, inputs, parent |
 | Escalate | Issue form with label `needs-human` and a Decider field | Built. See [escalation.md](escalation.md). Fields: decider, trigger, seat, artifact, decision, options with a recommendation, work parked, consequence of delay |
 | Approve | CODEOWNERS and a branch ruleset | A human merge approves. Check E1 will bind the identity |
 | Release | Environment with a required reviewer | The release decision. The post-deploy check (E13) runs as an Actions job |
@@ -61,7 +62,8 @@ The repo stays the record for approvals, statuses and test evidence. Design rule
 Names, not ids. Ids are assigned when each is built.
 
 1. **Task intake.** A PR references an issue whose form fields are filled in and whose
-   manifest paths exist.
+   manifest paths exist. The form is built as the backlog item (E21), see
+   [backlog.md](backlog.md). The PR-to-issue check is not.
 2. **Summary shape.** The PR description has the four parts.
 3. **Escalation aging.** Built as E19 and `tools/escalations.py`. See
    [escalation.md](escalation.md).
