@@ -76,8 +76,8 @@ Of 32 elements reviewed, 17 are universal, 11 become optional modules and 4 are 
 | Intent test for the user | `North Star Test` | Universal | Owner names a real scenario the change improves; domain wording removed |
 | File authority RACI | `agent-raci.md §File Ownership` | Universal | Nine seats plus the Steward; enforced by CODEOWNERS and required reviews |
 | Independent review in a fresh session | `independent-review-prompt.md` | Universal | Kept; reviewer gets artifacts, never the author's reasoning |
-| Near-miss registry | `near-miss-registry.md` | Universal | Kept; merged with known issues via a Type column |
-| Known issues registry | `known-issues-registry.md` | Universal | Merged into the near-miss file as Type = external |
+| Near-miss registry | `near-miss-registry.md` | Universal | Kept |
+| Known issues registry | `known-issues-registry.md` | Universal | Kept as its own file: few entries, and it is the statement of known limitations for outside reviewers. It was briefly merged into the near-miss file (Type column) and split out again |
 | Session state file | `SESSION_STATE.md` | Universal | Capped at 200 lines; archived at each cycle exit |
 | Git working tree protocol | `agents.md §Git Working Tree Protocol` | Universal | One worktree per agent; no stash; hook-enforced |
 | Pre-push and required-check gates | `CLAUDE.md, .githooks/pre-push` | Universal | Every gate names its hook or ruleset |
@@ -138,7 +138,8 @@ These four gates run inside each increment. Four phase gates sit above them (cas
 | Definition of Ready | `docs/dor.yml` | Floor rows pinned by version; project rows only finer |
 | Standards | `docs/standards/` | Input contracts owned by the consuming seat; craft standards by the producing seat |
 | Artifact chain | `docs/case/`, `docs/design/`, `docs/plan/`, `docs/intents/`, `docs/adr/` | Front matter with ID, seats, status and parents; a review file beside each artifact |
-| Registry | `docs/registry.md` | Append only; Type = near-miss or external |
+| Near-miss registry | `docs/near-miss-registry.md` | Append only; hazards we can design away |
+| Known issues registry | `docs/known-issues-registry.md` | Append only; limitations we cannot solve, with workarounds. The file to show an outside reviewer |
 | State | `STATE.md` | Size-capped; rewritten each session; archived each cycle |
 
 ### Deliberately left out of the core
@@ -627,7 +628,7 @@ The two passes agree on 29 entries. The largest disagreement is 48 entries the a
 | Scripts outside the lint gate | NM-041 | Craft rule: every executable file is linted |
 | Demo ownership | NM-025 | Left to the optional demo module and crew review |
 
-The nine seat-judgment entries depend on how well a challenger or explain-back reader does the job. The seven stack-specific entries are tool quirks no floor can anticipate; the registry is the right home for those, as known issues.
+The nine seat-judgment entries depend on how well a challenger or explain-back reader does the job. The seven stack-specific entries are tool quirks no floor can anticipate; the known issues registry is the right home for those.
 
 ## Setup sequence and first-run checklist
 

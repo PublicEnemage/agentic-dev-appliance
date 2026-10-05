@@ -61,6 +61,14 @@ Shipped so far:
   inbox, check E19), in `docs/method/escalation.md`. Next for the pilot: task intake check
   and summary shape check.
 
+- **Near-miss registry and file names:** the registry is `docs/near-miss-registry.md` and the
+  template's own is `docs/method/template-near-miss-registry.md` (RG-001 to RG-008). Limitations
+  we cannot solve go in `docs/known-issues-registry.md`. Check E20 refuses generic file names.
+- **Backlog:** the Backlog item form, the `backlog` label and check E21, in
+  `docs/method/backlog.md`. First items: #18 code standards and #19 documentation standards,
+  each with the retroactive naming sweep. The renames of `docs/roles.yml`, `docs/skips.yml`
+  and `docs/templates/registry-entry.md` wait for #19.
+
 Still to come:
 
 - **Apply the decisions:** Frontend Architect role proposal (`RP-001`, drafted) with peer

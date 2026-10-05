@@ -74,7 +74,7 @@ These are advisory until their check ships. Each names the check that will repla
 - Consult before framing. Choose the consulted seats by the problem's likely root cause,
   not its surface.
 - The countermeasure to a near-miss is never "be more careful". It is a redesign that
-  ships as a check. File every near-miss in `docs/registry.md`.
+  ships as a check. File every near-miss in `docs/near-miss-registry.md`.
 - Where a diagram and its text disagree, the diagram governs structure. Raise the gap as
   a challenge finding (floor row D13).
 - A gap that no seat can judge opens a crew review (`docs/templates/role-proposal.md`).
@@ -82,6 +82,8 @@ These are advisory until their check ships. Each names the check that will repla
 - Prescribe outcomes and gates, not steps. Rules live in standing documents and job
   descriptions; a prompt names the outcome. When an agent errs, fix the standing document
   or the check, never the prompt.
+- A file name says what the file is for, in as few words as it takes, unless its folder
+  already says. Check E20 refuses the worst generic names.
 - Never declare a qualification, a seat or an approval to make a check pass. A failing
   check that tells the truth is worth more than a passing one that does not.
 

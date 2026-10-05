@@ -36,6 +36,12 @@ Bootstrap copies the human's description of the product here, as given.
   is built (`docs/method/escalation.md`, check E19). Open: the pilot repository's plan, who
   authors task issues, milestone or iteration for a cycle, and the escalation closure check.
 
+- Near-miss registry renamed, file-name rule added (E20), known issues kept in their own file
+  (`docs/known-issues-registry.md`), backlog process built (`docs/method/backlog.md`, E21).
+  Backlog: #18 code standards, #19 documentation standards. Each carries the retroactive
+  naming sweep and the inline reference updates, and #19 carries the renames of
+  `docs/roles.yml`, `docs/skips.yml` and `docs/templates/registry-entry.md`.
+
 ## Left mid-task
 
 None.

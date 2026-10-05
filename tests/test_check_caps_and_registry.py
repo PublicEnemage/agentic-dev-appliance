@@ -4,7 +4,6 @@ from conftest import messages
 
 ENTRY = """
 ## RG-{n:03d} — Lint gate missing from a worktree
-**Type:** {type}
 **Date:** 2026-10-01
 **What happened:** The pre-push hook used a relative path.
 **What was at risk:** Unlinted code reaching the lane.
@@ -15,7 +14,7 @@ ENTRY = """
 
 
 def add_entries(repo, *entries):
-    path = repo.root / "docs/registry.md"
+    path = repo.root / "docs/near-miss-registry.md"
     path.write_text(path.read_text() + "".join(entries))
 
 
@@ -45,38 +44,80 @@ def test_refuses_too_many_active_tracks(repo):
 
 
 def test_registry_with_valid_entries_passes(repo):
-    add_entries(repo, ENTRY.format(n=1, type="near-miss", check="E6"), ENTRY.format(n=2, type="external", check="workaround documented"))
+    add_entries(repo, ENTRY.format(n=1, check="E6"), ENTRY.format(n=2, check="E3"))
     report = check_registry.check(repo.root)
     assert report.ok, messages(report)
 
 
 def test_refuses_gap_in_registry_ids(repo):
-    add_entries(repo, ENTRY.format(n=1, type="near-miss", check="E6"), ENTRY.format(n=3, type="near-miss", check="E6"))
+    add_entries(repo, ENTRY.format(n=1, check="E6"), ENTRY.format(n=3, check="E6"))
     assert "expected RG-002" in messages(check_registry.check(repo.root))
 
 
 def test_refuses_missing_registry_field(repo):
-    add_entries(repo, ENTRY.format(n=1, type="near-miss", check="E6").replace("**What caught it:** Gate canary.\n", ""))
+    add_entries(repo, ENTRY.format(n=1, check="E6").replace("**What caught it:** Gate canary.\n", ""))
     assert "missing field 'What caught it'" in messages(check_registry.check(repo.root))
 
 
 def test_refuses_near_miss_without_a_check(repo):
-    add_entries(repo, ENTRY.format(n=1, type="near-miss", check="be more careful"))
+    add_entries(repo, ENTRY.format(n=1, check="be more careful"))
     assert "must ship as a check" in messages(check_registry.check(repo.root))
 
 
 def test_refuses_unbalanced_code_fence(repo):
     # The WorldSIM registry had NM-061 to NM-100 trapped inside an unclosed fence.
-    add_entries(repo, "\n```markdown\n", ENTRY.format(n=1, type="near-miss", check="E6"))
+    add_entries(repo, "\n```markdown\n", ENTRY.format(n=1, check="E6"))
     assert "unbalanced code fence" in messages(check_registry.check(repo.root))
-
-
-def test_refuses_unknown_registry_type(repo):
-    add_entries(repo, ENTRY.format(n=1, type="incident", check="E6"))
-    assert "Type 'incident'" in messages(check_registry.check(repo.root))
 
 
 def test_template_development_registry_is_well_formed():
     from conftest import REPO
-    report = check_registry.check(REPO, "docs/method/registry.md")
+    report = check_registry.check(REPO, "docs/method/template-near-miss-registry.md")
     assert report.ok, messages(report)
+
+
+KNOWN = """
+## KI-{n:03d} — Rulesets need a paid plan on private repositories
+**Date:** 2026-10-05
+**What the limitation is:** Branch rulesets are unavailable on the free plan for private repositories.
+**Who or what it affects:** Every merge gate that relies on a ruleset.
+**Why we cannot solve it:** The platform plan holds it. The owner decides the spend.
+**Workaround:** {workaround}
+**Revisit when:** The product has paying users.
+"""
+
+
+def add_known(repo, *entries):
+    path = repo.root / "docs/known-issues-registry.md"
+    path.write_text(path.read_text() + "".join(entries))
+
+
+def test_known_issues_with_valid_entries_pass(repo):
+    add_known(repo, KNOWN.format(n=1, workaround="Keep the repository public."), KNOWN.format(n=2, workaround="Review by hand."))
+    report = check_registry.check(repo.root)
+    assert report.ok, messages(report)
+
+
+def test_refuses_a_known_issue_without_a_workaround(repo):
+    add_known(repo, KNOWN.format(n=1, workaround="TBD"))
+    assert "needs a written workaround" in messages(check_registry.check(repo.root))
+
+
+def test_refuses_a_gap_in_known_issue_ids(repo):
+    add_known(repo, KNOWN.format(n=1, workaround="x"), KNOWN.format(n=3, workaround="x"))
+    assert "expected KI-002" in messages(check_registry.check(repo.root))
+
+
+def test_refuses_a_known_issue_missing_a_field(repo):
+    add_known(repo, KNOWN.format(n=1, workaround="x").replace("**Revisit when:** The product has paying users.\n", ""))
+    assert "missing field 'Revisit when'" in messages(check_registry.check(repo.root))
+
+
+def test_refuses_a_missing_known_issues_registry(repo):
+    (repo.root / "docs/known-issues-registry.md").unlink()
+    assert "registry is missing" in messages(check_registry.check(repo.root))
+
+
+def test_a_near_miss_entry_is_not_accepted_in_the_known_issues_file(repo):
+    add_known(repo, ENTRY.format(n=1, check="E6"))
+    assert "malformed entry heading" in messages(check_registry.check(repo.root))
