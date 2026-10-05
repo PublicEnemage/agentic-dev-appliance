@@ -34,8 +34,15 @@ more than waiting.
 5. **Challenge** by the Architect seat in a fresh session. Findings go in
    `RP-001-frontend-architect.review.md`. The author answers item by item.
 6. **Engineering Lead approves** by merging.
-7. **Apply session** (Architect) edits `docs/roles.yml`.
-8. **Challenge and merge** as in BOOTSTRAP steps 5 and 6.
+7. **Wiring proposals** (Architect session). One proposal per existing seat the decisions
+   change, each with `change_of` and `change_kind` set (`wiring`, or `substantive` where
+   the change reaches more than inputs and outputs), carrying the full new charter. Status
+   in-review.
+8. **Counterpart reviews.** The seat on the other end of each changed line writes its peer
+   entry. One session per counterpart can review every proposal that touches its seat.
+9. **Engineering Lead approves** each proposal, and an Architect session edits
+   `docs/roles.yml` so each roster job equals its approved charter. A fresh challenge and
+   the merge follow, as in BOOTSTRAP steps 5 and 6.
 
 Step 5's challenger is the Architect, who loses the `frontend` layer. The Engineering Lead
 reads the review with that in mind.
@@ -76,11 +83,15 @@ Fill `{SEAT}` with Designer, Architect, Verifier, Delivery or Builder.
 > `docs/roles.yml` disagree about what passes between you, list the change each side needs.
 > Number your conditions. Do not edit the proposal or `docs/roles.yml`. Commit and push.
 
-## Prompt: apply session (step 7)
+## Prompt: apply session (step 9)
+
+The wiring proposals of steps 7 and 8 are new since decision 8, and their prompts are not
+written. Write them after RP-001 has run, from what its peer round shows. The prompt below
+applies approved charters to the roster.
 
 > You are a fresh session in a clone of the project repository. Read `CLAUDE.md` first and
 > follow what it says. You hold the **Architect** seat. Cut branch `apply-roles` from
-> `main`, after RP-001 is approved and merged. Input manifest: `CLAUDE.md`, `STATE.md`,
+> `main`, after RP-001 and the wiring proposals are approved and merged. Input manifest: `CLAUDE.md`, `STATE.md`,
 > `docs/method/dryrun-3-decisions.md`, `docs/method/dryrun-3.md`,
 > `docs/crew/RP-001-frontend-architect.md` and its review, `docs/roles.yml`,
 > `docs/artifact-types.yml`, `docs/templates/`. Read nothing else. Before anything else,
@@ -101,11 +112,13 @@ Fill `{SEAT}` with Designer, Architect, Verifier, Delivery or Builder.
 - **The Steward cannot author a proposal.** The role-proposal template said "Any seat or the
   Steward may author", but SEATS refuses the Steward in every artifact field. The template
   now says any agent seat may author and the Steward compiles.
-- **An existing seat has no change path.** E17 refuses an in-review proposal for a seat that
-  already exists, with a message that says to change it through its own proposal. The
-  Engineering Lead's job description says every roles-file change carries an approved role
-  proposal. Both cannot hold. The apply session's table and the Engineering Lead's merge
-  stand in for it until the design is settled. Open.
+- **An existing seat had no change path.** E17 refused an in-review proposal for a seat that
+  already exists. Decided 2026-10-05 (decision 8): every change takes a proposal with
+  `change_of` and `change_kind`, and a peer review before merge. Wiring-only changes take one
+  peer and the seat on the other end of each changed line. This changes step 7: the apply
+  session writes one wiring proposal per seat it changes, and the counterpart seats review
+  them. A counterpart session can review every line that touches its seat in one sitting.
+  Cost and batching are open (see decisions).
 - **Author and peers.** E17 forbids the author as a peer, and every seat that sends input or
   takes output must be a peer. The author must therefore be a seat the charter does not
   name. For RP-001 that is Product, which is why the charter has no Product input.

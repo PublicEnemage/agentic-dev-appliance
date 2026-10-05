@@ -183,6 +183,76 @@ def test_refuses_proposing_a_seat_that_exists(repo):
     assert "already exists" in messages(run(repo, proposed_seat="Builder"))
 
 
+def test_change_of_lets_an_existing_seat_go_to_review(repo):
+    report = run(repo, proposed_seat="Operator", change_of="Operator", change_kind="substantive")
+    assert report.ok, messages(report)
+
+
+def test_refuses_change_of_that_differs_from_the_proposed_seat(repo):
+    assert "must equal proposed_seat" in messages(run(repo, proposed_seat="Operator", change_of="Builder", change_kind="substantive"))
+
+
+def test_refuses_change_of_a_seat_that_does_not_exist(repo):
+    assert "is not a seat" in messages(run(repo, change_of="Nobody"))
+
+
+def test_a_change_still_needs_independent_peers(repo):
+    out = messages(run(repo, proposed_seat="Operator", change_of="Operator", change_kind="substantive", peer_review=good()["peer_review"][:1]))
+    assert "needs at least two distinct peers" in out
+
+
+def operator_job(repo):
+    roles = yaml.safe_load((repo.root / "docs/roles.yml").read_text())
+    return copy.deepcopy(roles["seats"]["Operator"]["job"])
+
+
+def wiring(repo, mutate, peers, **over):
+    stub_cited_files(repo)
+    job = operator_job(repo)
+    mutate(job)
+    peer_review = [p for p in good()["peer_review"] + [
+        {"seat": "Architect", "recommendation": "accept", "demand": "Takes the NFR check", "evidence": "RP-001"}]
+        if p["seat"] in peers]
+    kw = dict(proposed_seat="Operator", change_of="Operator", change_kind="wiring",
+              charter=job, peer_review=peer_review, peer_recommendation="accept-with-conditions")
+    kw.update(over)
+    repo.artifact("role-proposal", 1, review=False, **good(**kw))
+    return check_crew.check(repo.root)
+
+
+def add_input(job):
+    job["inputs"].append({"artifact": "ux-design", "from": "Designer"})
+
+
+def test_wiring_change_with_its_counterpart_as_the_one_peer_passes(repo):
+    report = wiring(repo, add_input, ["Designer"])
+    assert report.ok, messages(report)
+
+
+def test_wiring_change_needs_the_seat_on_the_other_end(repo):
+    out = messages(wiring(repo, add_input, ["Builder"]))
+    assert "'Designer' sends input to or consumes output from the proposed seat but gave no peer review" in out
+
+
+def test_wiring_change_still_needs_a_peer(repo):
+    assert "needs at least one peer" in messages(wiring(repo, add_input, []))
+
+
+def test_wiring_declared_but_the_trigger_changes(repo):
+    def both(job):
+        add_input(job)
+        job["trigger"] = "Something else entirely"
+    assert "also changes trigger" in messages(wiring(repo, both, ["Designer"]))
+
+
+def test_wiring_declared_but_nothing_changes(repo):
+    assert "equals the current job description" in messages(wiring(repo, lambda job: None, ["Designer"]))
+
+
+def test_change_needs_a_kind(repo):
+    assert "change_kind must be one of" in messages(run(repo, proposed_seat="Operator", change_of="Operator"))
+
+
 def test_refuses_unfilled_placeholders(repo):
     assert "proposed_seat is missing" in messages(run(repo, proposed_seat="{{Name of the new seat}}"))
 

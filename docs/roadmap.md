@@ -61,8 +61,8 @@ Still to come:
 - **Apply the decisions:** Frontend Architect role proposal (`RP-001`, drafted) with peer
   review, then wiring changes to existing seats, Data Architect adoption, and one
   constitution line for a blocked human seat. Sequence and prompts in
-  `docs/method/dryrun-3-apply.md`. Open: no change path for an existing seat's job
-  description (E17 against the Engineering Lead's job).
+  `docs/method/dryrun-3-apply.md`. A change to an existing seat now takes a proposal with
+  `change_of` and `change_kind` (E17), with a peer review in both tiers.
 - **Wiring reconciliation and review independence (next build):** both a pair-level and a
   name-level test, with the rule pinned, and a check that a review branch holds no other
   seat's review in its ancestry. Authority and help blocks and the seat library follow.
