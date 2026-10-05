@@ -1,0 +1,26 @@
+name: escalation-aging
+
+# Flags escalations that wait too long for a human seat (docs/method/escalation.md).
+on:
+  schedule:
+    - cron: "17 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  aging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r tools/checks/requirements.txt
+      - name: Flag overdue and stalled escalations
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python tools/escalations.py aging --apply

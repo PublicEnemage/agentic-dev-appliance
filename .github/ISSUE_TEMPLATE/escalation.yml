@@ -1,0 +1,72 @@
+name: Escalation
+description: A decision only a human seat can make. One decision per issue.
+title: "[escalation] "
+labels: ["needs-human"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Raise a decision no seat can make and no rule decides. Park the work that depends on it,
+        and record the parked work in STATE.md under Open decisions. Agents never approve in a
+        human's place. The answer counts once a merged pull request that closes this issue
+        records it in a repository file. A comment is not the decision.
+  - type: dropdown
+    id: decider
+    attributes:
+      label: Decider
+      description: Who decides. Business intent and scope go to the Intent Owner. Engineering and governance go to the Engineering Lead.
+      options: [Engineering Lead, Intent Owner]
+    validations:
+      required: true
+  - type: dropdown
+    id: trigger
+    attributes:
+      label: Trigger
+      options:
+        - A second rejection of one artifact
+        - A gap no seat can judge
+        - An exception request
+        - Blocked past its limit
+        - A validation or release gate
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: seat
+    attributes:
+      label: Seat raising it
+    validations:
+      required: true
+  - type: input
+    id: artifact
+    attributes:
+      label: Artifact or task
+      description: The repository path or issue the decision is about.
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decision needed
+      description: One decision, stated so a yes or a choice answers it.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and recommendation
+      description: Each option with its cost, then the one you recommend and why.
+    validations:
+      required: true
+  - type: textarea
+    id: parked
+    attributes:
+      label: Work parked meanwhile
+    validations:
+      required: true
+  - type: textarea
+    id: consequence
+    attributes:
+      label: Consequence of delay
+    validations:
+      required: true

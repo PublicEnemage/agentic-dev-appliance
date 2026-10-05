@@ -128,6 +128,18 @@ checks:
       sends it input or consumes its output, each with a recommendation, a demand
       statement and evidence. Checks completeness and independence. Whether the job
       description is sound is the peers' and the Engineering Lead's call.
+  E19:
+    name: The escalation path exists and says what it must
+    where: pre-push, CI
+    status: implemented
+    implemented: tools/checks/check_escalation.py
+    note: >
+      The escalation issue form has the needs-human label and every required field
+      (decider, trigger, seat, artifact, decision, options, parked work, consequence).
+      appliance.yml states the respond and stalled limits in days. The aging workflow is
+      scheduled, runs tools/escalations.py aging and can write issues. A merged pull
+      request must close each answered escalation with the decision in a repository file;
+      that check is not built yet. See docs/method/escalation.md.
   DOR:
     name: Definition of Ready floor completeness, finer never coarser, no blank rows
     where: CI
