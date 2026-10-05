@@ -56,6 +56,10 @@ Shipped so far:
   `docs/method/dryrun-3-decisions.md`, including a Frontend Architect seat split from the
   Architect. Decided, not yet applied to `docs/roles.yml`.
 
+- **Flow management (design):** GitHub-native dispatch, tracking, board and queues,
+  with platform lock-in accepted. Design in `docs/method/flow.md`. Pilot build: task
+  intake check, summary shape check and escalation aging first.
+
 Still to come:
 
 - **Apply the decisions:** Frontend Architect role proposal (`RP-001`, drafted) with peer
