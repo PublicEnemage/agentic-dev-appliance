@@ -101,11 +101,12 @@ Fill `{SEAT}` with Designer, Architect, Verifier, Delivery or Builder.
 - **The Steward cannot author a proposal.** The role-proposal template said "Any seat or the
   Steward may author", but SEATS refuses the Steward in every artifact field. The template
   now says any agent seat may author and the Steward compiles.
-- **An existing seat has no change path.** E17 refuses an in-review proposal for a seat that
-  already exists, with a message that says to change it through its own proposal. The
-  Engineering Lead's job description says every roles-file change carries an approved role
-  proposal. Both cannot hold. The apply session's table and the Engineering Lead's merge
-  stand in for it until the design is settled. Open.
+- **An existing seat had no change path.** E17 refused an in-review proposal for a seat that
+  already exists, while the Engineering Lead's job said every roles-file change carries an
+  approved proposal. Decided 2026-10-05 (decision 8): substantive changes use a proposal
+  with `change_of` set and a full peer review, which E17 now accepts. Wiring-only changes
+  need no proposal once the reconciliation check exists. Until then the apply session's
+  change table, a fresh challenge and the Engineering Lead's merge stand in for it.
 - **Author and peers.** E17 forbids the author as a peer, and every seat that sends input or
   takes output must be a peer. The author must therefore be a seat the charter does not
   name. For RP-001 that is Product, which is why the charter has no Product input.

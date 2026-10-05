@@ -50,12 +50,12 @@ seats:
       value: "Decides whether the work is sound and governed, and approves, returns or declines each artifact for the concerns the challenger and peers cannot judge: cost, overlap, risk and governance. An agent cannot hold this seat"
       outputs:
         - {artifact: "approved architecture, test strategy and CI/CD approach", for: Builder, acceptance: "Builder can implement from them without asking what they should have said (the consumer duty)"}
-        - {artifact: "approved or declined role proposals, with docs/roles.yml changes", for: Steward, acceptance: "Every roles-file change carries an approved role proposal with its peer review (E17)"}
+        - {artifact: "approved or declined role proposals, with docs/roles.yml changes", for: Steward, acceptance: "Every substantive roles-file change carries an approved role proposal with its peer review (E17)"}
       standards: [docs/dor/floor.yml, docs/artifact-types.yml, docs/enforcement.yml]
       templates: [docs/templates/review.md, docs/templates/role-proposal.md]
       verifier:
         seat: Steward
-        evidence: "Merge history shows a human merge on every protected branch; roles-file changes match an approved proposal (E17); required checks green on each merge"
+        evidence: "Merge history shows a human merge on every protected branch; substantive roles-file changes match an approved proposal (E17); required checks green on each merge"
   Product:
     kind: agent
     concern: Who uses this, and for what?

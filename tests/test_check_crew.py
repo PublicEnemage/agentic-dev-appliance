@@ -183,6 +183,24 @@ def test_refuses_proposing_a_seat_that_exists(repo):
     assert "already exists" in messages(run(repo, proposed_seat="Builder"))
 
 
+def test_change_of_lets_an_existing_seat_go_to_review(repo):
+    report = run(repo, proposed_seat="Operator", change_of="Operator")
+    assert report.ok, messages(report)
+
+
+def test_refuses_change_of_that_differs_from_the_proposed_seat(repo):
+    assert "must equal proposed_seat" in messages(run(repo, proposed_seat="Operator", change_of="Builder"))
+
+
+def test_refuses_change_of_a_seat_that_does_not_exist(repo):
+    assert "is not a seat" in messages(run(repo, change_of="Nobody"))
+
+
+def test_a_change_still_needs_independent_peers(repo):
+    out = messages(run(repo, proposed_seat="Operator", change_of="Operator", peer_review=good()["peer_review"][:1]))
+    assert "needs at least two distinct peers" in out
+
+
 def test_refuses_unfilled_placeholders(repo):
     assert "proposed_seat is missing" in messages(run(repo, proposed_seat="{{Name of the new seat}}"))
 

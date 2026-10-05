@@ -18,6 +18,12 @@ Refuses when:
 - the peer group's recommendation is more favourable than its least favourable member
 - a proposal is approved while the peer group recommends rejection, or without a matching
   job description in docs/roles.yml
+- a proposal names an existing core seat without `change_of`, or `change_of` names a seat
+  that does not exist or differs from `proposed_seat`
+
+A change to an existing seat's job description is a proposal with `change_of` set to that
+seat and its full new charter. It takes the same peer review as a new seat. When a later
+change is approved, mark the earlier proposal for that seat superseded.
 
 The check sees completeness and independence. Whether a job description is sound, and
 whether evidence is real, is for the peers, the challenger and the Engineering Lead.
@@ -144,8 +150,15 @@ def check(root: Path) -> Report:
         if blank(proposed):
             bad("proposed_seat is missing")
             proposed = None
-        elif a.status == "in-review" and proposed in base_seats:
-            bad(f"proposed seat '{proposed}' already exists; change a job description through its own proposal, not as a new seat")
+
+        change_of = m.get("change_of")
+        if not blank(change_of):
+            if change_of not in seats:
+                bad(f"change_of '{change_of}' is not a seat; a new seat is proposed without change_of")
+            elif proposed is not None and proposed != change_of:
+                bad(f"change_of '{change_of}' must equal proposed_seat '{proposed}'")
+        elif proposed in base_seats and a.status == "in-review":
+            bad(f"proposed seat '{proposed}' already exists; to change its job description set change_of: {proposed} and state the full new charter")
 
         charter = m.get("charter")
         problems, senders, consumers = job_problems(charter, label="charter", subject=proposed,
@@ -202,7 +215,8 @@ def check(root: Path) -> Report:
                 if proposed not in seats:
                     bad(f"approved, but seat '{proposed}' is not in {ROSTER}; the approved job description belongs there")
                 elif adopted != charter:
-                    bad(f"approved charter differs from the job description of '{proposed}' in {ROSTER}")
+                    bad(f"approved charter differs from the job description of '{proposed}' in {ROSTER}; "
+                        "if a later proposal changed it, mark this one superseded")
     return report
 
 

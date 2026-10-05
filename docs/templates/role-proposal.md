@@ -9,6 +9,7 @@ approver: Engineering Lead
 parents: []
 approved_at: null
 proposed_seat: '{{Name of the new seat}}'
+change_of: null
 charter:
   trigger: '{{The event or condition that puts this seat to work}}'
   inputs:
@@ -33,6 +34,10 @@ Any agent seat may author, but not one the charter names as sender or consumer, 
 author cannot be a peer. The Steward compiles and holds no artifact seat (SEATS). Another
 seat challenges on the role, rule or tool test. The Engineering Lead approves, and reads the
 peer review first.
+
+To change an existing seat's job description, set `change_of` and `proposed_seat` to that
+seat and state the full new charter. It takes the same peer review as a new seat. Leave
+`change_of` null for a new seat.
 
 The front matter is the job description. The check E17 reads it, so keep each value to
 what the seat actually does. A seat that cannot fill a line has not yet been defined.

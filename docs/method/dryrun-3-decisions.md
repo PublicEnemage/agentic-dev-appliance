@@ -16,6 +16,7 @@ when the change below is merged.
 | 5 | `domain-core` | Open a crew review for a domain seat if the pilot has real business rules. Otherwise mark it not applicable with a reason |
 | 6 | `benefits-check` | **Product** authors it, the **Operator** supplies post-deploy evidence, the **Intent Owner** approves. Add it to Product's outputs |
 | 7 | Blocked human seat | Now: sessions park work and record it in `STATE.md`, and agents never approve in a human's place. Before real users arrive: name a deputy for the Engineering Lead seat |
+| 8 | Changing an existing seat's job description | **Two tiers, with peer review.** A substantive change goes through a role proposal with `change_of` set and the same peer review as a new seat. A wiring-only change needs no proposal once a check proves both seats agree. Decided 2026-10-05, on the condition that there is a peer review |
 
 ### Reading of 1 and 2, to confirm
 
@@ -55,6 +56,9 @@ chain. It does not fix the author and challenger pair.
 
 ## Not decided
 
+- Whether a wiring-only change needs the other seat's acknowledgement beyond the mechanical
+  match. Until the reconciliation check exists, wiring changes ride in one reviewed pull
+  request and a challenge, and the Engineering Lead's merge approves them.
 - `[Builder, Operator]` and `[Designer, Verifier]` in `incompatible_pairs`. Recommended,
   not yet confirmed. `[Builder, Delivery]` is not recommended.
 - Which of the smaller questions (peer review of exceptions, exception parameters under one

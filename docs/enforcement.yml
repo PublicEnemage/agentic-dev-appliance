@@ -120,7 +120,8 @@ checks:
       Every seat in docs/roles.yml, human or agent, core or optional, must state its
       trigger, inputs and senders, value, outputs and consumers, standards, templates, and
       a verifier on another holder with evidence. A role proposal in review or approved
-      states the same, and an approved charter must match the roster unchanged.
+      states the same, and an approved charter must match the roster unchanged. A change to
+      an existing seat is a proposal with change_of set, and takes the same peer review.
       Its peer review needs two or more independent peers, including every agent seat that
       sends it input or consumes its output, each with a recommendation, a demand
       statement and evidence. Checks completeness and independence. Whether the job

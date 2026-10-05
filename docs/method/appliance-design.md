@@ -563,6 +563,21 @@ The core descriptions are drafts for the Intent Owner and Engineering Lead, writ
 the register and the floor. They have not been through peer review as proposals. Peers
 should challenge them the first time a project runs a crew review.
 
+### Changing an existing seat
+
+A new seat and a change to an existing seat's job description take the same road: a role
+proposal with a peer review. A change sets `change_of` to the seat and states the full new
+charter, and E17 applies the same peer rules. When a later change is approved, the earlier
+proposal for that seat is marked superseded, or E17 refuses the roster as drifted.
+
+Two tiers keep this from becoming a toll on every edit. A **substantive** change (trigger,
+value, verifier, qualified layers, incompatible pairs, holders) needs a proposal. A
+**wiring-only** change (adding, renaming or removing inputs and outputs) needs none once the
+reconciliation check proves each change is matched on the other seat. Until that check
+exists, wiring changes ride in one reviewed pull request with a change table, and the
+Engineering Lead's merge approves them. E17 does not yet tell the two tiers apart: a
+substantive change with no proposal is caught by review, not by the check.
+
 ### Retirement keeps the crew honest
 
 At each cycle exit, the Steward lists roles that were not activated or whose trigger stopped firing. Each listed role gets a keep or retire decision, with the same approval path as a new role. Surge roles retire on their end date unless renewed in writing. The roster also carries a size budget set in the constitution; a proposal that exceeds the budget must name a role to merge or retire.
